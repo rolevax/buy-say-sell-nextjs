@@ -56,7 +56,7 @@ function HomeBody() {
   for (let i = 0; i < 10; i++) {
     stories.push((
       <ListItem disablePadding key={i}>
-        <ListItemButton>
+        <ListItemButton href={"/story/" + i}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
