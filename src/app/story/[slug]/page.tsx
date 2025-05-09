@@ -1,6 +1,6 @@
 'use client'
  
-import { AppBar, Box, Button, Container, IconButton, List, ListItem, ListItemAvatar, ListItemText, TextField, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, Container, FormControl, IconButton, Input, InputAdornment, InputLabel, List, ListItem, ListItemAvatar, ListItemText, TextField, Toolbar, Typography } from '@mui/material';
 import { usePathname } from 'next/navigation'
 import NextLink from 'next/link';
 import { ArrowBack } from '@mui/icons-material';
@@ -78,6 +78,13 @@ function CommentInput() {
         />
       <Button variant="contained">Buy</Button>
       <Button variant="contained">Say</Button>
+      <FormControl sx={{ m: 1 }} variant="standard">
+          <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
+          <Input
+            id="standard-adornment-amount"
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          />
+        </FormControl>
       <Button variant="contained">Sell</Button>
       <Copyright />
     </Box>
