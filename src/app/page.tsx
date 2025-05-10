@@ -14,6 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/Inbox';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Button, IconButton, Toolbar } from '@mui/material';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Home() {
   return (
@@ -42,10 +43,8 @@ function HomeAppBar() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Buy Say Sell
         </Typography>
-        <Box>
-          <Button component={NextLink} href="/about">About</Button>
-          <Button>Login</Button>
-        </Box>
+        <Button component={NextLink} href="/about">About</Button>
+        <ConnectButton />
       </Toolbar>
     </AppBar>
   );

@@ -1,10 +1,11 @@
+import '@rainbow-me/rainbowkit/styles.css';
 import * as React from 'react';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
-import ModeSwitch from '@/components/ModeSwitch';
+import { Providers } from '@/components/Providers';
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
@@ -15,7 +16,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            {props.children}
+            <Providers>
+              {props.children}
+            </Providers>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
