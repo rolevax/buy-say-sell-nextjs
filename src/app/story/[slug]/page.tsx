@@ -22,9 +22,10 @@ import { usePathname } from "next/navigation";
 import NextLink from "next/link";
 import { ArrowBack } from "@mui/icons-material";
 import Copyright from "@/components/Copyright";
-import { useAccount, useReadContract } from "wagmi";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
 import { wagmiContractConfig } from "@/contracts";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useState } from "react";
 
 export default function Story() {
   const pathname = usePathname();
@@ -97,12 +98,12 @@ function StoryBody(props: { storyID: string }) {
   let input;
   if (story.owner == address) {
     if (story.comments[story.comments.length - 1].owner == address) {
-      input = <SellInput />;
+      input = <SellInput index={story.index} sellPrice={story.sellPrice} />;
     } else {
-      input = <SayInput />;
+      input = <SayInput index={story.index} />;
     }
   } else if (story.sellPrice > 0) {
-    input = <BuyInput />;
+    input = <BuyInput index={story.index} sellPrice={story.sellPrice} />;
   } else {
     input = <p>Waiting for sell</p>;
   }
@@ -116,54 +117,97 @@ function StoryBody(props: { storyID: string }) {
   );
 }
 
-function BuyInput() {
+function BuyInput(props: { index: bigint, sellPrice: bigint }) {
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
+
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    writeContract({
+      ...wagmiContractConfig,
+      functionName: "agreeSellPrice",
+      args: [props.index],
+      value: props.sellPrice,
+    });
+  }
+
   return (
-    <Box>
-      <TextField
-        id="outlined-multiline-static"
-        label="Comment"
-        multiline
-        fullWidth
-        rows={2}
-      />
-      <Button variant="contained">Buy</Button>
-    </Box>
+    <form onSubmit={submit}>
+      <Box>
+        <Typography>Price: {props.sellPrice}</Typography>
+        <Button variant="contained" type="submit" disabled={isPending}>Buy</Button>
+        {hash && <div>Transaction Hash: {hash}</div>}
+        {error && <div>Error: {error.message}</div>}
+      </Box>
+    </form>
   );
 }
 
-function SayInput() {
-  return (
-    <Box>
-      <TextField
-        id="outlined-multiline-static"
-        label="Comment"
-        multiline
-        fullWidth
-        rows={2}
-      />
-      <Button variant="contained">Say</Button>
-    </Box>
-  );
-}
+function SayInput(props: { index: bigint }) {
+  const [content, setContent] = useState('');
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
 
-function SellInput() {
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    writeContract({
+      ...wagmiContractConfig,
+      functionName: "addComment",
+      args: [props.index, content],
+    });
+  }
+
   return (
-    <Box>
-      <TextField
-        id="outlined-multiline-static"
-        label="Comment"
-        multiline
-        fullWidth
-        rows={2}
-      />
-      <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
-        <Input
-          id="standard-adornment-amount"
-          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+    <form onSubmit={submit}>
+      <Box>
+        <TextField
+          id="outlined-multiline-static"
+          label="Comment"
+          multiline
+          fullWidth
+          rows={2}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
         />
-      </FormControl>
-      <Button variant="contained">Sell</Button>
-    </Box>
+        <Button variant="contained" type="submit" disabled={isPending}>Say</Button>
+        {hash && <div>Transaction Hash: {hash}</div>}
+        {error && <div>Error: {error.message || error.message}</div>}
+      </Box>
+    </form>
+  );
+}
+
+function SellInput(props: { index: bigint, sellPrice: bigint }) {
+  const [price, setPrice] = useState('114514');
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
+
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    writeContract({
+      ...wagmiContractConfig,
+      functionName: "offerSellPrice",
+      args: [props.index, BigInt(price)],
+    });
+  }
+
+  return (
+    <form onSubmit={submit}>
+      <Typography>Price: {props.sellPrice}</Typography>
+      <Box>
+        <FormControl sx={{ m: 1 }} variant="standard">
+          <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
+          <Input
+            id="standard-adornment-amount"
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+        </FormControl>
+        <Button variant="contained" type="submit" disabled={isPending}>Sell</Button>
+        {hash && <div>Transaction Hash: {hash}</div>}
+        {error && <div>Error: {error.message || error.message}</div>}
+      </Box>
+    </form>
   );
 }

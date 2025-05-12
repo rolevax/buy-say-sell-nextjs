@@ -21,7 +21,6 @@ export default function CommentInput() {
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    console.log(content + " " + price);
     writeContract({
       ...wagmiContractConfig,
       functionName: "createStory",
