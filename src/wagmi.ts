@@ -5,9 +5,9 @@ export const config = getDefaultConfig({
   appName: "RainbowKit demo",
   projectId: "YOUR_PROJECT_ID",
   chains: [
+    mainnet,
+    arbitrum,
     anvil,
-    // mainnet,
-    // arbitrum,
     // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
     //   ? [sepolia, anvil]
     //   : []),
