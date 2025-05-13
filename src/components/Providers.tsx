@@ -3,7 +3,11 @@
 import type React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import {
+  darkTheme,
+  lightTheme,
+  RainbowKitProvider,
+} from "@rainbow-me/rainbowkit";
 
 import { config } from "../wagmi";
 import { anvil } from "wagmi/chains";
@@ -14,7 +18,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider initialChain={anvil}>{children}</RainbowKitProvider>
+        <RainbowKitProvider
+          initialChain={anvil}
+          theme={{
+            lightMode: lightTheme(),
+            darkMode: darkTheme(),
+          }}
+        >
+          {children}
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
