@@ -26,6 +26,7 @@ import { useAccount, useReadContract, useWriteContract } from "wagmi";
 import { wagmiContractConfig } from "@/contracts";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useState } from "react";
+import CommentInput from "@/components/CommentInput";
 
 export default function Story() {
   const pathname = usePathname();
@@ -117,12 +118,10 @@ function StoryBody(props: { storyID: string }) {
   );
 }
 
-function BuyInput(props: { index: bigint, sellPrice: bigint }) {
+function BuyInput(props: { index: bigint; sellPrice: bigint }) {
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  async function submit() {
     writeContract({
       ...wagmiContractConfig,
       functionName: "agreeSellPrice",
@@ -132,82 +131,74 @@ function BuyInput(props: { index: bigint, sellPrice: bigint }) {
   }
 
   return (
-    <form onSubmit={submit}>
-      <Box>
-        <Typography>Price: {props.sellPrice}</Typography>
-        <Button variant="contained" type="submit" disabled={isPending}>Buy</Button>
-        {hash && <div>Transaction Hash: {hash}</div>}
-        {error && <div>Error: {error.message}</div>}
-      </Box>
-    </form>
+    <Box>
+      <CommentInput
+        submitButtonText={"Buy"}
+        price={props.sellPrice}
+        content={"Buy to comment"}
+        onSubmit={submit}
+        isPending={isPending}
+      />
+      {hash && <div>Transaction Hash: {hash}</div>}
+      {error && <div>Error: {error.message}</div>}
+    </Box>
   );
 }
 
 function SayInput(props: { index: bigint }) {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
+  const [price, setPrice] = useState(BigInt(1000000000));
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  async function submit() {
     writeContract({
       ...wagmiContractConfig,
       functionName: "addComment",
-      args: [props.index, content],
+      args: [props.index, content, price],
     });
   }
 
   return (
-    <form onSubmit={submit}>
-      <Box>
-        <TextField
-          id="outlined-multiline-static"
-          label="Comment"
-          multiline
-          fullWidth
-          rows={2}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-        <Button variant="contained" type="submit" disabled={isPending}>Say</Button>
-        {hash && <div>Transaction Hash: {hash}</div>}
-        {error && <div>Error: {error.message || error.message}</div>}
-      </Box>
-    </form>
+    <Box>
+      <CommentInput
+        submitButtonText={"Say & Sell"}
+        price={price}
+        onPriceChanged={setPrice}
+        content={content}
+        onContentChanged={setContent}
+        onSubmit={submit}
+        isPending={isPending}
+      />
+      {hash && <div>Transaction Hash: {hash}</div>}
+      {error && <div>Error: {error.message}</div>}
+    </Box>
   );
 }
 
-function SellInput(props: { index: bigint, sellPrice: bigint }) {
-  const [price, setPrice] = useState('114514');
+function SellInput(props: { index: bigint; sellPrice: bigint }) {
+  const [price, setPrice] = useState(props.sellPrice);
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  async function submit() {
     writeContract({
       ...wagmiContractConfig,
-      functionName: "offerSellPrice",
-      args: [props.index, BigInt(price)],
+      functionName: "changeSellPrice",
+      args: [props.index, price],
     });
   }
 
   return (
-    <form onSubmit={submit}>
-      <Typography>Price: {props.sellPrice}</Typography>
-      <Box>
-        <FormControl sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
-          <Input
-            id="standard-adornment-amount"
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </FormControl>
-        <Button variant="contained" type="submit" disabled={isPending}>Sell</Button>
-        {hash && <div>Transaction Hash: {hash}</div>}
-        {error && <div>Error: {error.message || error.message}</div>}
-      </Box>
-    </form>
+    <Box>
+      <CommentInput
+        submitButtonText={"Update Price"}
+        price={price}
+        onPriceChanged={setPrice}
+        content={"Already said"}
+        onSubmit={submit}
+        isPending={isPending}
+      />
+      {hash && <div>Transaction Hash: {hash}</div>}
+      {error && <div>Error: {error.message || error.message}</div>}
+    </Box>
   );
 }

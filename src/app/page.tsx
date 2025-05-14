@@ -52,7 +52,6 @@ function HomeBody() {
     <Box>
       <StoryList />
       <CreateStoryBox />
-      <ProTip />
       <Copyright />
     </Box>
   );
