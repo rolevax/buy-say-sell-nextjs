@@ -70,13 +70,13 @@ function StoryAppBar(props: { storyID: string }) {
 
 function StoryBody(props: { storyID: string }) {
   const {
-    data: stories,
+    data: story,
     error,
     isPending,
   } = useReadContract({
     ...wagmiContractConfig,
-    functionName: "getStories",
-    args: [],
+    functionName: "getStory",
+    args: [BigInt(+props.storyID)],
   });
   const { address } = useAccount();
 
@@ -88,7 +88,6 @@ function StoryBody(props: { storyID: string }) {
     return <div>Error: {error.shortMessage || error.message}</div>;
   }
 
-  let story = stories[+props.storyID];
   let storyEvents = story.comments.map((comment, i) => (
     <ListItem key={i}>
       <ListItemAvatar>N</ListItemAvatar>
