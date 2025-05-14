@@ -9,7 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, Button, IconButton, Toolbar } from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import StoryList from "@/components/StoryList";
-import CommentInput from "@/components/CommentInput";
+import CreateStoryBox from "@/components/CreateStoryBox";
 
 export default function Home() {
   return (
@@ -51,7 +51,7 @@ function HomeBody() {
   return (
     <Box>
       <StoryList />
-      <CommentInput />
+      <CreateStoryBox />
       <ProTip />
       <Copyright />
     </Box>

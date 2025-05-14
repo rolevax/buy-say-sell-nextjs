@@ -15,6 +15,11 @@ export const wagmiContractConfig = {
           type: "string",
           internalType: "string",
         },
+        {
+          name: "price",
+          type: "uint256",
+          internalType: "uint256",
+        },
       ],
       outputs: [],
       stateMutability: "nonpayable",
@@ -34,12 +39,35 @@ export const wagmiContractConfig = {
     },
     {
       type: "function",
+      name: "changeSellPrice",
+      inputs: [
+        {
+          name: "storyIndex",
+          type: "uint256",
+          internalType: "uint256",
+        },
+        {
+          name: "price",
+          type: "uint256",
+          internalType: "uint256",
+        },
+      ],
+      outputs: [],
+      stateMutability: "nonpayable",
+    },
+    {
+      type: "function",
       name: "createStory",
       inputs: [
         {
           name: "content",
           type: "string",
           internalType: "string",
+        },
+        {
+          name: "price",
+          type: "uint256",
+          internalType: "uint256",
         },
       ],
       outputs: [],
@@ -67,11 +95,6 @@ export const wagmiContractConfig = {
             },
             {
               name: "sellPrice",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "buyPrice",
               type: "uint256",
               internalType: "uint256",
             },
@@ -104,39 +127,61 @@ export const wagmiContractConfig = {
     },
     {
       type: "function",
-      name: "offerBuyPrice",
+      name: "getStory",
       inputs: [
         {
-          name: "storyIndex",
-          type: "uint256",
-          internalType: "uint256",
-        },
-        {
-          name: "price",
+          name: "index",
           type: "uint256",
           internalType: "uint256",
         },
       ],
-      outputs: [],
-      stateMutability: "nonpayable",
-    },
-    {
-      type: "function",
-      name: "offerSellPrice",
-      inputs: [
+      outputs: [
         {
-          name: "storyIndex",
-          type: "uint256",
-          internalType: "uint256",
-        },
-        {
-          name: "price",
-          type: "uint256",
-          internalType: "uint256",
+          name: "",
+          type: "tuple",
+          internalType: "struct BuySaySell.Story",
+          components: [
+            {
+              name: "index",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "owner",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "sellPrice",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "buyer",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "comments",
+              type: "tuple[]",
+              internalType: "struct BuySaySell.Comment[]",
+              components: [
+                {
+                  name: "owner",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "content",
+                  type: "string",
+                  internalType: "string",
+                },
+              ],
+            },
+          ],
         },
       ],
-      outputs: [],
-      stateMutability: "nonpayable",
+      stateMutability: "view",
     },
     {
       type: "error",

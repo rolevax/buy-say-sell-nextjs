@@ -1,6 +1,3 @@
-"use client";
-
-import { wagmiContractConfig } from "@/contracts";
 import {
   Box,
   Button,
@@ -10,22 +7,19 @@ import {
   InputLabel,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
-import { useWriteContract } from "wagmi";
 
-export default function CommentInput() {
-  const [content, setContent] = useState("");
-  const [price, setPrice] = useState("");
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
-
+export default function CommentInput(props: {
+  submitButtonText: string;
+  price: bigint;
+  onPriceChanged: (p: bigint) => void;
+  content: string;
+  onContentChanged: (s: string) => void;
+  onSubmit: () => void;
+  isPending: boolean;
+}) {
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    writeContract({
-      ...wagmiContractConfig,
-      functionName: "createStory",
-      args: [content],
-    });
+    props.onSubmit();
   }
 
   return (
@@ -36,23 +30,24 @@ export default function CommentInput() {
         multiline
         fullWidth
         rows={2}
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
+        value={props.content}
+        onChange={(e) => props.onContentChanged(e.target.value)}
       />
       <FormControl sx={{ m: 1 }} variant="standard">
         <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
         <Input
           id="standard-adornment-amount"
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          value={props.price}
+          onChange={(e) => {
+            let s = e.target.value;
+            props.onPriceChanged(BigInt(s));
+          }}
         />
       </FormControl>
-      <Button variant="contained" type="submit" disabled={isPending}>
-        Create
+      <Button variant="contained" type="submit" disabled={props.isPending}>
+        {props.submitButtonText}
       </Button>
-      {hash && <div>Transaction Hash: {hash}</div>}
-      {error && <div>Error: {error.message || error.message}</div>}
     </form>
   );
 }
