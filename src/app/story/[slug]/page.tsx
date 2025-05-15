@@ -89,24 +89,41 @@ function StoryBody(props: { storyID: string }) {
     return <div>Error: {error.shortMessage || error.message}</div>;
   }
 
-  let storyEvents = story.comments.map((comment, i) => (
-    <ListItem key={i}>
-      <ListItemAvatar>N</ListItemAvatar>
-      <ListItemText primary={comment.content} secondary={comment.owner} />
-    </ListItem>
-  ));
+  let storyEvents = story.comments.map((comment, i) => {
+    if (comment.isLog) {
+      let text;
+      if (comment.content == "buy") {
+        text = `Bought by ${shortAddr(comment.owner)} for ${comment.price} wei`;
+      } else {
+        text = `Price changed to ${comment.price} wei`;
+      }
+      return (
+        <ListItem key={i}>
+          <Typography color="secondary">{text}</Typography>
+        </ListItem>
+      );
+    }
+
+    return (
+      <ListItem key={i}>
+        <ListItemAvatar>N</ListItemAvatar>
+        <ListItemText
+          primary={comment.content}
+          secondary={`${shortAddr(comment.owner)} ${comment.price} wei`}
+        />
+      </ListItem>
+    );
+  });
 
   let input;
   if (story.owner == address) {
-    if (story.comments[story.comments.length - 1].owner == address) {
+    if (story.said) {
       input = <SellInput index={story.index} sellPrice={story.sellPrice} />;
     } else {
       input = <SayInput index={story.index} />;
     }
-  } else if (story.sellPrice > 0) {
-    input = <BuyInput index={story.index} sellPrice={story.sellPrice} />;
   } else {
-    input = <p>Waiting for sell</p>;
+    input = <BuyInput index={story.index} sellPrice={story.sellPrice} />;
   }
 
   return (
@@ -215,5 +232,11 @@ function SellInput(props: { index: bigint; sellPrice: bigint }) {
       {hash && <div>Transaction Hash: {hash}</div>}
       {error && <div>Error: {error.message || error.message}</div>}
     </Box>
+  );
+}
+
+function shortAddr(address: string) {
+  return (
+    address.substring(0, 4) + "..." + address.substring(address.length - 4)
   );
 }

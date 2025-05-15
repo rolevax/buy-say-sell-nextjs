@@ -99,11 +99,6 @@ export const wagmiContractConfig = {
               internalType: "uint256",
             },
             {
-              name: "buyer",
-              type: "address",
-              internalType: "address",
-            },
-            {
               name: "comments",
               type: "tuple[]",
               internalType: "struct BuySaySell.Comment[]",
@@ -118,7 +113,22 @@ export const wagmiContractConfig = {
                   type: "string",
                   internalType: "string",
                 },
+                {
+                  name: "price",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "isLog",
+                  type: "bool",
+                  internalType: "bool",
+                },
               ],
+            },
+            {
+              name: "said",
+              type: "bool",
+              internalType: "bool",
             },
           ],
         },
@@ -157,11 +167,6 @@ export const wagmiContractConfig = {
               internalType: "uint256",
             },
             {
-              name: "buyer",
-              type: "address",
-              internalType: "address",
-            },
-            {
               name: "comments",
               type: "tuple[]",
               internalType: "struct BuySaySell.Comment[]",
@@ -176,7 +181,22 @@ export const wagmiContractConfig = {
                   type: "string",
                   internalType: "string",
                 },
+                {
+                  name: "price",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "isLog",
+                  type: "bool",
+                  internalType: "bool",
+                },
               ],
+            },
+            {
+              name: "said",
+              type: "bool",
+              internalType: "bool",
             },
           ],
         },
