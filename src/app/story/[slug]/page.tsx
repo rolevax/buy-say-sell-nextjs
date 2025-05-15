@@ -27,6 +27,7 @@ import { wagmiContractConfig } from "@/contracts";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useState } from "react";
 import CommentInput from "@/components/CommentInput";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Story() {
   const pathname = usePathname();
@@ -118,6 +119,7 @@ function StoryBody(props: { storyID: string }) {
 }
 
 function BuyInput(props: { index: bigint; sellPrice: bigint }) {
+  const queryClient = useQueryClient();
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
   async function submit() {
@@ -127,6 +129,10 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
       args: [props.index],
       value: props.sellPrice,
     });
+  }
+
+  if (hash) {
+    queryClient.invalidateQueries();
   }
 
   return (
@@ -145,6 +151,7 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
 }
 
 function SayInput(props: { index: bigint }) {
+  const queryClient = useQueryClient();
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(BigInt(1000000000));
   const { data: hash, error, isPending, writeContract } = useWriteContract();
@@ -155,6 +162,10 @@ function SayInput(props: { index: bigint }) {
       functionName: "addComment",
       args: [props.index, content, price],
     });
+  }
+
+  if (hash) {
+    queryClient.invalidateQueries();
   }
 
   return (
@@ -175,6 +186,7 @@ function SayInput(props: { index: bigint }) {
 }
 
 function SellInput(props: { index: bigint; sellPrice: bigint }) {
+  const queryClient = useQueryClient();
   const [price, setPrice] = useState(props.sellPrice);
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
@@ -184,6 +196,10 @@ function SellInput(props: { index: bigint; sellPrice: bigint }) {
       functionName: "changeSellPrice",
       args: [props.index, price],
     });
+  }
+
+  if (hash) {
+    queryClient.invalidateQueries();
   }
 
   return (

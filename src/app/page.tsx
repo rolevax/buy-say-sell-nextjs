@@ -3,7 +3,6 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import NextLink from "next/link";
-import ProTip from "@/components/ProTip";
 import Copyright from "@/components/Copyright";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, Button, IconButton, Toolbar } from "@mui/material";
