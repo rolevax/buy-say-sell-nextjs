@@ -117,11 +117,7 @@ function StoryBody(props: { storyID: string }) {
 
   let input;
   if (story.owner == address) {
-    if (story.said) {
-      input = <SellInput index={story.index} sellPrice={story.sellPrice} />;
-    } else {
-      input = <SayInput index={story.index} />;
-    }
+    input = <SayInput index={story.index} />;
   } else {
     input = <BuyInput index={story.index} sellPrice={story.sellPrice} />;
   }
@@ -174,11 +170,19 @@ function SayInput(props: { index: bigint }) {
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
   async function submit() {
-    writeContract({
-      ...wagmiContractConfig,
-      functionName: "addComment",
-      args: [props.index, content, price],
-    });
+    if (content.trim() == "") {
+      writeContract({
+        ...wagmiContractConfig,
+        functionName: "changeSellPrice",
+        args: [props.index, price],
+      });
+    } else {
+      writeContract({
+        ...wagmiContractConfig,
+        functionName: "addComment",
+        args: [props.index, content, price],
+      });
+    }
   }
 
   if (hash) {
@@ -198,39 +202,6 @@ function SayInput(props: { index: bigint }) {
       />
       {hash && <div>Transaction Hash: {hash}</div>}
       {error && <div>Error: {error.message}</div>}
-    </Box>
-  );
-}
-
-function SellInput(props: { index: bigint; sellPrice: bigint }) {
-  const queryClient = useQueryClient();
-  const [price, setPrice] = useState(props.sellPrice);
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
-
-  async function submit() {
-    writeContract({
-      ...wagmiContractConfig,
-      functionName: "changeSellPrice",
-      args: [props.index, price],
-    });
-  }
-
-  if (hash) {
-    queryClient.invalidateQueries();
-  }
-
-  return (
-    <Box>
-      <CommentInput
-        submitButtonText={"Update Price"}
-        price={price}
-        onPriceChanged={setPrice}
-        content={"Already said"}
-        onSubmit={submit}
-        isPending={isPending}
-      />
-      {hash && <div>Transaction Hash: {hash}</div>}
-      {error && <div>Error: {error.message || error.message}</div>}
     </Box>
   );
 }
