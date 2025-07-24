@@ -14,7 +14,7 @@ import {
 } from "@rainbow-me/rainbowkit";
 
 import { config } from "../wagmi";
-import { anvil } from "wagmi/chains";
+import { anvil, sepolia } from "wagmi/chains";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +27,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <WagmiProvider config={config}>
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider
-              initialChain={anvil}
+              initialChain={sepolia}
               theme={{
                 lightMode: lightTheme(),
                 darkMode: darkTheme(),

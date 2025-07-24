@@ -8,6 +8,7 @@ export const config = getDefaultConfig({
     mainnet,
     arbitrum,
     anvil,
+    sepolia,
     // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
     //   ? [sepolia, anvil]
     //   : []),
