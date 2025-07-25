@@ -23,11 +23,11 @@ import NextLink from "next/link";
 import { ArrowBack } from "@mui/icons-material";
 import Copyright from "@/components/Copyright";
 import { useAccount, useReadContract, useWriteContract } from "wagmi";
-import { wagmiContractConfig } from "@/contracts";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useState } from "react";
 import CommentInput from "@/components/CommentInput";
 import { useQueryClient } from "@tanstack/react-query";
+import { contractAbi, getContractAddress } from "@/contracts";
 
 export default function Story() {
   const pathname = usePathname();
@@ -75,7 +75,8 @@ function StoryBody(props: { storyID: string }) {
     error,
     isPending,
   } = useReadContract({
-    ...wagmiContractConfig,
+    address: getContractAddress(),
+    abi: contractAbi,
     functionName: "getStory",
     args: [BigInt(+props.storyID)],
   });
@@ -137,7 +138,8 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
 
   async function submit() {
     writeContract({
-      ...wagmiContractConfig,
+      address: getContractAddress(),
+      abi: contractAbi,
       functionName: "agreeSellPrice",
       args: [props.index],
       value: props.sellPrice,
@@ -172,13 +174,15 @@ function SayInput(props: { index: bigint }) {
   async function submit() {
     if (content.trim() == "") {
       writeContract({
-        ...wagmiContractConfig,
+        address: getContractAddress(),
+        abi: contractAbi,
         functionName: "changeSellPrice",
         args: [props.index, price],
       });
     } else {
       writeContract({
-        ...wagmiContractConfig,
+        address: getContractAddress(),
+        abi: contractAbi,
         functionName: "addComment",
         args: [props.index, content, price],
       });

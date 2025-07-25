@@ -1,6 +1,6 @@
 "use client";
 
-import { wagmiContractConfig } from "@/contracts";
+import { contractAbi, getContractAddress } from "@/contracts";
 import { Inbox } from "@mui/icons-material";
 import {
   List,
@@ -17,7 +17,8 @@ export default function StoryList() {
     error,
     isPending,
   } = useReadContract({
-    ...wagmiContractConfig,
+    address: getContractAddress(),
+    abi: contractAbi,
     functionName: "getStories",
     args: [],
   });
