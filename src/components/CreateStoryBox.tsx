@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import CommentInput from "./CommentInput";
-import { wagmiContractConfig } from "@/contracts";
+import { contractAbi, getContractAddress } from "@/contracts";
 import { useWriteContract } from "wagmi";
 import { Box } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
@@ -15,7 +15,8 @@ export default function CreateStoryBox() {
 
   async function submit() {
     writeContract({
-      ...wagmiContractConfig,
+      address: getContractAddress(),
+      abi: contractAbi,
       functionName: "createStory",
       args: [content, price],
     });
