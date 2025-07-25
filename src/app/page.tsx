@@ -7,8 +7,6 @@ import Copyright from "@/components/Copyright";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, Button, IconButton, Toolbar } from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import StoryList from "@/components/StoryList";
-import CreateStoryBox from "@/components/CreateStoryBox";
 import HomeClient from "@/components/HomeClient";
 
 export default function Home() {

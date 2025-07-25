@@ -28,6 +28,7 @@ import { useState } from "react";
 import CommentInput from "@/components/CommentInput";
 import { useQueryClient } from "@tanstack/react-query";
 import { contractAbi, getContractAddress } from "@/contracts";
+import PleaseConnect from "@/components/PleaseConnect";
 
 export default function Story() {
   const pathname = usePathname();
@@ -117,7 +118,9 @@ function StoryBody(props: { storyID: string }) {
   });
 
   let input;
-  if (story.owner == address) {
+  if (!address) {
+    input = <PleaseConnect />;
+  } else if (story.owner == address) {
     input = <SayInput index={story.index} />;
   } else {
     input = <BuyInput index={story.index} sellPrice={story.sellPrice} />;
