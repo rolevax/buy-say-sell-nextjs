@@ -1,4 +1,6 @@
+import { HourglassTop } from "@mui/icons-material";
 import {
+  Alert,
   Box,
   Button,
   FormControl,
@@ -47,7 +49,7 @@ export default function CommentInput(props: {
           alignItems="center"
           justifyContent="start"
         >
-          <FormControl sx={{ m: 1 }} variant="standard">
+          <FormControl sx={{ m: 1 }} variant="outlined">
             <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
             <Input
               id="standard-adornment-amount"
@@ -67,9 +69,15 @@ export default function CommentInput(props: {
           </Button>
         </Grid>
       </form>
-      {props.hash && <div>Transaction Hash: {props.hash}</div>}
+      {props.hash && (
+        <Alert severity="success" icon={<HourglassTop />} variant="outlined">
+          Confirming transaction: {props.hash}
+        </Alert>
+      )}
       {props.error && (
-        <div>Error: {props.error.message || props.error.message}</div>
+        <Alert severity="error" variant="outlined">
+          {props.error.message || props.error.message}
+        </Alert>
       )}
     </Box>
   );
