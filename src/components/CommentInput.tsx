@@ -11,9 +11,10 @@ import {
   TextField,
 } from "@mui/material";
 
-import { WriteContractErrorType } from "@wagmi/core";
-import { useWaitForTransactionReceipt } from "wagmi";
+import { WriteContractParameters } from "@wagmi/core";
+import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export default function CommentInput(props: {
   submitButtonText: string;
@@ -21,24 +22,32 @@ export default function CommentInput(props: {
   onPriceChanged?: (p: bigint) => void;
   content: string;
   onContentChanged?: (s: string) => void;
-  onSubmit: () => void;
-  isPending: boolean;
-  hash: `0x${string}` | undefined;
-  error: WriteContractErrorType | null;
+  writeValues: WriteContractParameters;
 }) {
   const queryClient = useQueryClient();
+  const {
+    data: hash,
+    error,
+    isPending,
+    writeContract,
+    reset,
+  } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
-      hash: props.hash,
+      hash,
     });
+  useEffect(() => {
+    if (hash && isConfirmed) {
+      queryClient.invalidateQueries();
+      reset();
+      props.onContentChanged?.("");
+    }
+  }, [hash, isConfirmed]);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    props.onSubmit();
-  }
 
-  if (props.hash && isConfirmed) {
-    queryClient.invalidateQueries();
+    writeContract(props.writeValues);
   }
 
   return (
@@ -52,7 +61,7 @@ export default function CommentInput(props: {
           rows={2}
           value={props.content}
           onChange={(e) => props.onContentChanged?.(e.target.value)}
-          disabled={!props.onContentChanged || props.isPending || isConfirming}
+          disabled={!props.onContentChanged || isPending || isConfirming}
         />
         <Grid
           container
@@ -73,28 +82,26 @@ export default function CommentInput(props: {
                 let s = e.target.value;
                 props.onPriceChanged?.(BigInt(s));
               }}
-              disabled={
-                !props.onPriceChanged || props.isPending || isConfirming
-              }
+              disabled={!props.onPriceChanged || isPending || isConfirming}
             />
           </FormControl>
           <Button
             variant="contained"
             type="submit"
-            disabled={props.isPending || isConfirming}
+            disabled={isPending || isConfirming}
           >
             {props.submitButtonText}
           </Button>
         </Grid>
       </form>
-      {props.hash && isConfirming && (
+      {hash && isConfirming && (
         <Alert severity="success" icon={<HourglassTop />} variant="outlined">
-          Confirming transaction: {props.hash}
+          Confirming transaction: {hash}
         </Alert>
       )}
-      {props.error && (
+      {error && (
         <Alert severity="error" variant="outlined">
-          {props.error.message || props.error.message}
+          {error.message || error.message}
         </Alert>
       )}
     </Box>

@@ -8,16 +8,6 @@ import { useWriteContract } from "wagmi";
 export default function CreateStoryBox() {
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(BigInt(1000000000));
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
-
-  async function submit() {
-    writeContract({
-      address: getContractAddress(),
-      abi: contractAbi,
-      functionName: "createStory",
-      args: [content, price],
-    });
-  }
 
   return (
     <CommentInput
@@ -26,10 +16,12 @@ export default function CreateStoryBox() {
       onPriceChanged={setPrice}
       content={content}
       onContentChanged={setContent}
-      onSubmit={submit}
-      isPending={isPending}
-      hash={hash}
-      error={error}
+      writeValues={{
+        address: getContractAddress(),
+        abi: contractAbi,
+        functionName: "createStory",
+        args: [content, price],
+      }}
     />
   );
 }

@@ -136,63 +136,25 @@ function StoryBody(props: { storyID: string }) {
 }
 
 function BuyInput(props: { index: bigint; sellPrice: bigint }) {
-  const queryClient = useQueryClient();
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
-
-  async function submit() {
-    writeContract({
-      address: getContractAddress(),
-      abi: contractAbi,
-      functionName: "agreeSellPrice",
-      args: [props.index],
-      value: props.sellPrice,
-    });
-  }
-
-  if (hash) {
-    queryClient.invalidateQueries();
-  }
-
   return (
     <CommentInput
       submitButtonText={"Buy"}
       price={props.sellPrice}
       content={"Buy to comment"}
-      onSubmit={submit}
-      isPending={isPending}
-      hash={hash}
-      error={error}
+      writeValues={{
+        address: getContractAddress(),
+        abi: contractAbi,
+        functionName: "agreeSellPrice",
+        args: [props.index],
+        value: props.sellPrice,
+      }}
     />
   );
 }
 
 function SayInput(props: { index: bigint }) {
-  const queryClient = useQueryClient();
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(BigInt(1000000000));
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
-
-  async function submit() {
-    if (content.trim() == "") {
-      writeContract({
-        address: getContractAddress(),
-        abi: contractAbi,
-        functionName: "changeSellPrice",
-        args: [props.index, price],
-      });
-    } else {
-      writeContract({
-        address: getContractAddress(),
-        abi: contractAbi,
-        functionName: "addComment",
-        args: [props.index, content, price],
-      });
-    }
-  }
-
-  if (hash) {
-    queryClient.invalidateQueries();
-  }
 
   return (
     <CommentInput
@@ -201,10 +163,21 @@ function SayInput(props: { index: bigint }) {
       onPriceChanged={setPrice}
       content={content}
       onContentChanged={setContent}
-      onSubmit={submit}
-      isPending={isPending}
-      hash={hash}
-      error={error}
+      writeValues={
+        content.trim() == ""
+          ? {
+              address: getContractAddress(),
+              abi: contractAbi,
+              functionName: "changeSellPrice",
+              args: [props.index, price],
+            }
+          : {
+              address: getContractAddress(),
+              abi: contractAbi,
+              functionName: "addComment",
+              args: [props.index, content, price],
+            }
+      }
     />
   );
 }
