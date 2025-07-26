@@ -154,17 +154,15 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
   }
 
   return (
-    <Box>
-      <CommentInput
-        submitButtonText={"Buy"}
-        price={props.sellPrice}
-        content={"Buy to comment"}
-        onSubmit={submit}
-        isPending={isPending}
-      />
-      {hash && <div>Transaction Hash: {hash}</div>}
-      {error && <div>Error: {error.message}</div>}
-    </Box>
+    <CommentInput
+      submitButtonText={"Buy"}
+      price={props.sellPrice}
+      content={"Buy to comment"}
+      onSubmit={submit}
+      isPending={isPending}
+      hash={hash}
+      error={error}
+    />
   );
 }
 
@@ -197,19 +195,17 @@ function SayInput(props: { index: bigint }) {
   }
 
   return (
-    <Box>
-      <CommentInput
-        submitButtonText={"Say & Sell"}
-        price={price}
-        onPriceChanged={setPrice}
-        content={content}
-        onContentChanged={setContent}
-        onSubmit={submit}
-        isPending={isPending}
-      />
-      {hash && <div>Transaction Hash: {hash}</div>}
-      {error && <div>Error: {error.message}</div>}
-    </Box>
+    <CommentInput
+      submitButtonText={"Say & Sell"}
+      price={price}
+      onPriceChanged={setPrice}
+      content={content}
+      onContentChanged={setContent}
+      onSubmit={submit}
+      isPending={isPending}
+      hash={hash}
+      error={error}
+    />
   );
 }
 

@@ -4,7 +4,6 @@ import { useState } from "react";
 import CommentInput from "./CommentInput";
 import { contractAbi, getContractAddress } from "@/contracts";
 import { useWriteContract } from "wagmi";
-import { Box } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function CreateStoryBox() {
@@ -27,18 +26,16 @@ export default function CreateStoryBox() {
   }
 
   return (
-    <Box>
-      <CommentInput
-        submitButtonText="Create"
-        price={price}
-        onPriceChanged={setPrice}
-        content={content}
-        onContentChanged={setContent}
-        onSubmit={submit}
-        isPending={isPending}
-      />
-      {hash && <div>Transaction Hash: {hash}</div>}
-      {error && <div>Error: {error.message || error.message}</div>}
-    </Box>
+    <CommentInput
+      submitButtonText="Create"
+      price={price}
+      onPriceChanged={setPrice}
+      content={content}
+      onContentChanged={setContent}
+      onSubmit={submit}
+      isPending={isPending}
+      hash={hash}
+      error={error}
+    />
   );
 }
