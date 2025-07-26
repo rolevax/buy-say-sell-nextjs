@@ -4,10 +4,8 @@ import { useState } from "react";
 import CommentInput from "./CommentInput";
 import { contractAbi, getContractAddress } from "@/contracts";
 import { useWriteContract } from "wagmi";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function CreateStoryBox() {
-  const queryClient = useQueryClient();
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(BigInt(1000000000));
   const { data: hash, error, isPending, writeContract } = useWriteContract();
@@ -19,10 +17,6 @@ export default function CreateStoryBox() {
       functionName: "createStory",
       args: [content, price],
     });
-  }
-
-  if (hash) {
-    queryClient.invalidateQueries();
   }
 
   return (

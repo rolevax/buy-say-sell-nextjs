@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 
 import { WriteContractErrorType } from "@wagmi/core";
+import { useWaitForTransactionReceipt } from "wagmi";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CommentInput(props: {
   submitButtonText: string;
@@ -24,9 +26,19 @@ export default function CommentInput(props: {
   hash: `0x${string}` | undefined;
   error: WriteContractErrorType | null;
 }) {
+  const queryClient = useQueryClient();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash: props.hash,
+    });
+
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     props.onSubmit();
+  }
+
+  if (props.hash && isConfirmed) {
+    queryClient.invalidateQueries();
   }
 
   return (
@@ -40,7 +52,7 @@ export default function CommentInput(props: {
           rows={2}
           value={props.content}
           onChange={(e) => props.onContentChanged?.(e.target.value)}
-          disabled={!props.onContentChanged}
+          disabled={!props.onContentChanged || props.isPending || isConfirming}
         />
         <Grid
           container
@@ -61,15 +73,21 @@ export default function CommentInput(props: {
                 let s = e.target.value;
                 props.onPriceChanged?.(BigInt(s));
               }}
-              disabled={!props.onPriceChanged}
+              disabled={
+                !props.onPriceChanged || props.isPending || isConfirming
+              }
             />
           </FormControl>
-          <Button variant="contained" type="submit" disabled={props.isPending}>
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={props.isPending || isConfirming}
+          >
             {props.submitButtonText}
           </Button>
         </Grid>
       </form>
-      {props.hash && (
+      {props.hash && isConfirming && (
         <Alert severity="success" icon={<HourglassTop />} variant="outlined">
           Confirming transaction: {props.hash}
         </Alert>
