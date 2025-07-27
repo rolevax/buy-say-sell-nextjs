@@ -1,13 +1,13 @@
-import * as React from "react";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import NextLink from "next/link";
+import BriefIntro from "@/components/BriefIntro";
 import Copyright from "@/components/Copyright";
+import HomeClient from "@/components/HomeClient";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, Button, IconButton, Toolbar } from "@mui/material";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import HomeClient from "@/components/HomeClient";
+import NextLink from "next/link";
 
 export default function Home() {
   return (
@@ -48,6 +48,7 @@ function HomeAppBar() {
 function HomeBody() {
   return (
     <Box>
+      <BriefIntro />
       <HomeClient />
       <Copyright />
     </Box>
