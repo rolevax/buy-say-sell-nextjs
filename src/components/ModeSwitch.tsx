@@ -1,7 +1,7 @@
 "use client";
 
 import { DarkMode } from "@mui/icons-material";
-import { IconButton, useMediaQuery } from "@mui/material";
+import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
 
 export default function ModeSwitch() {
@@ -22,8 +22,10 @@ export default function ModeSwitch() {
   }
 
   return (
-    <IconButton onClick={toggle} color="inherit">
-      <DarkMode />
-    </IconButton>
+    <Tooltip title="Toggle dark mode">
+      <IconButton onClick={toggle} color="inherit">
+        <DarkMode />
+      </IconButton>
+    </Tooltip>
   );
 }
