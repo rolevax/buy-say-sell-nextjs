@@ -1,34 +1,22 @@
 "use client";
 
+import CommentInput from "@/components/CommentInput";
+import CommonAppBar from "@/components/CommonAppBar";
+import Copyright from "@/components/Copyright";
+import PleaseConnect from "@/components/PleaseConnect";
+import { contractAbi, getContractAddress } from "@/contracts";
 import {
-  AppBar,
   Box,
-  Button,
   Container,
-  FormControl,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
-  TextField,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import { usePathname } from "next/navigation";
-import NextLink from "next/link";
-import { ArrowBack } from "@mui/icons-material";
-import Copyright from "@/components/Copyright";
-import { useAccount, useReadContract, useWriteContract } from "wagmi";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useState } from "react";
-import CommentInput from "@/components/CommentInput";
-import { useQueryClient } from "@tanstack/react-query";
-import { contractAbi, getContractAddress } from "@/contracts";
-import PleaseConnect from "@/components/PleaseConnect";
+import { useAccount, useReadContract } from "wagmi";
 
 export default function Story() {
   const pathname = usePathname();
@@ -37,36 +25,10 @@ export default function Story() {
   return (
     <Container maxWidth="lg">
       <Box sx={{ width: "100%", flexGrow: 1 }}>
-        <StoryAppBar storyID={storyID} />
+        <CommonAppBar title={`Story #${storyID}`} />
         <StoryBody storyID={storyID} />
       </Box>
     </Container>
-  );
-}
-
-function StoryAppBar(props: { storyID: string }) {
-  return (
-    <AppBar position="sticky">
-      <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-          href="/"
-        >
-          <ArrowBack />
-        </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Story {props.storyID}
-        </Typography>
-        <Button component={NextLink} href="/about">
-          About
-        </Button>
-        <ConnectButton />
-      </Toolbar>
-    </AppBar>
   );
 }
 
