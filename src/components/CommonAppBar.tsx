@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import ModeSwitch from "./ModeSwitch";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import LanguageButton from "./LanguageButton";
 
 export default function CommonAppBar(props: { title: string }) {
   return (
@@ -32,6 +33,7 @@ export default function CommonAppBar(props: { title: string }) {
           </IconButton>
         </Tooltip>
         <ModeSwitch />
+        <LanguageButton />
         <div style={{ width: 16 }} />
         <ConnectButton />
       </Toolbar>
