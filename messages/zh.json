@@ -1,5 +1,19 @@
 {
-  "HomePage": {
-    "title": "卧槽，冰！"
+  "App": {
+    "name": "买说卖",
+    "pleaseConnect": "请连接钱包以使用。"
+  },
+  "AppBar": {
+    "about": "关于",
+    "darkMode": "切换夜间模式"
+  },
+  "BriefIntro": {
+    "begin": "买说卖是一个社交平台，在这里你可以：",
+    "buyTitle": "买下帖子",
+    "sayTitle": "说两句",
+    "sellTitle": "把它卖掉！",
+    "buyLong": "每个帖子都有一个主人，买下即拥有。你也可以创建新帖子。",
+    "sayLong": "作为主人，你是唯一可以回复的人。说点什么吧。",
+    "sellLong": "把你的帖子上架到市场。谁会买你的帖子？为什么？多少钱？——这一切由你决定！"
   }
 }

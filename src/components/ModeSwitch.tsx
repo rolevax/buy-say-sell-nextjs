@@ -3,8 +3,10 @@
 import { DarkMode } from "@mui/icons-material";
 import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
+import { useTranslations } from "next-intl";
 
 export default function ModeSwitch() {
+  const t = useTranslations("AppBar");
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const { mode, setMode } = useColorScheme();
   if (!mode) {
@@ -22,7 +24,7 @@ export default function ModeSwitch() {
   }
 
   return (
-    <Tooltip title="Toggle dark mode">
+    <Tooltip title={t("darkMode")}>
       <IconButton onClick={toggle} color="inherit">
         <DarkMode />
       </IconButton>

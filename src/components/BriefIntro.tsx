@@ -17,17 +17,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 
 export default function BriefIntro() {
+  const t = useTranslations("BriefIntro");
   const [open, setOpen] = useState([false, false, false]);
 
   const items = [];
-  const titles = ["Buy a post", "Say something", "And sell it!"];
-  const contents = [
-    "Each post has one unique owner. Buy to own the post. Of course you can also create new posts without buying.",
-    "As the owner, you are the only one who can comment to the post. Say something.",
-    "List your post to the market. Who will buy your post? Why? How much? These are all up to you!",
-  ];
+  const titles = [t("buyTitle"), t("sayTitle"), t("sellTitle")];
+  const contents = [t("buyLong"), t("sayLong"), t("sellLong")];
   const icons = [<ShoppingCart />, <AddComment />, <Sell />];
 
   for (let i = 0; i < titles.length; i++) {
@@ -64,7 +62,7 @@ export default function BriefIntro() {
         aria-labelledby="nested-list-subheader"
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
-            Buy Say Sell is a social community where you can:
+            {t("begin")}
           </ListSubheader>
         }
       >

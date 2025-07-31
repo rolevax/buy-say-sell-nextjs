@@ -1,6 +1,6 @@
 "use client";
 
-import { Locale, locales } from "@/i18n/config";
+import { LocaleCode, locales } from "@/i18n/config";
 import { setUserLocale } from "@/i18n/cookies";
 import { Language } from "@mui/icons-material";
 import {
@@ -30,7 +30,7 @@ export default function LanguageButton() {
   const handleClick = (value: string) => {
     if (value != locale) {
       startTransition(async () => {
-        setUserLocale(value as Locale);
+        setUserLocale(value as LocaleCode);
       });
     }
 
@@ -70,7 +70,11 @@ export default function LanguageButton() {
             selected={setting == locale}
             onClick={() => handleClick(setting)}
           >
-            <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
+            <Typography sx={{ textAlign: "center" }}>
+              {new Intl.DisplayNames([setting], { type: "language" }).of(
+                setting
+              )}
+            </Typography>
           </MenuItem>
         ))}
       </Menu>

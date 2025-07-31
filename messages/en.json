@@ -1,5 +1,19 @@
 {
-  "HomePage": {
-    "title": "Hello world!"
+  "App": {
+    "name": "Buy Say Sell",
+    "pleaseConnect": "Please connect your wallet to use."
+  },
+  "AppBar": {
+    "about": "About",
+    "darkMode": "Toggle dark mode"
+  },
+  "BriefIntro": {
+    "begin": "Buy Say Sell is a social community where you can:",
+    "buyTitle": "Buy a post",
+    "sayTitle": "Say something",
+    "sellTitle": "And sell it!",
+    "buyLong": "Each post has one unique owner. Buy to own the post. Of course you can also create new posts without buying.",
+    "sayLong": "As the owner, you are the only one who can comment to the post. Say something.",
+    "sellLong": "List your post to the market. Who will buy your post? Why? How much? These are all up to you!"
   }
 }
