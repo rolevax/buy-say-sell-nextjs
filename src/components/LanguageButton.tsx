@@ -11,11 +11,13 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { useLocale } from "next-intl";
 import { useState, useTransition } from "react";
 
 export default function LanguageButton() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [isPending, startTransition] = useTransition();
+  const locale = useLocale();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -26,10 +28,11 @@ export default function LanguageButton() {
   };
 
   const handleClick = (value: string) => {
-    const locale = value as Locale;
-    startTransition(() => {
-      setUserLocale(locale);
-    });
+    if (value != locale) {
+      startTransition(async () => {
+        setUserLocale(value as Locale);
+      });
+    }
 
     handleCloseUserMenu();
   };
@@ -37,7 +40,11 @@ export default function LanguageButton() {
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Language">
-        <IconButton color="inherit" onClick={handleOpenUserMenu}>
+        <IconButton
+          color="inherit"
+          onClick={handleOpenUserMenu}
+          loading={isPending}
+        >
           <Language />
         </IconButton>
       </Tooltip>
@@ -58,7 +65,11 @@ export default function LanguageButton() {
         onClose={handleCloseUserMenu}
       >
         {locales.map((setting) => (
-          <MenuItem key={setting} onClick={() => handleClick(setting)}>
+          <MenuItem
+            key={setting}
+            selected={setting == locale}
+            onClick={() => handleClick(setting)}
+          >
             <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
           </MenuItem>
         ))}
