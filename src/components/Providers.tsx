@@ -1,20 +1,20 @@
 "use client"; // for import anvil
 
-import type React from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { WagmiProvider } from "wagmi";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import theme from "@/theme";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
 import {
   darkTheme,
   lightTheme,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type React from "react";
+import { WagmiProvider } from "wagmi";
 
+import { sepolia } from "wagmi/chains";
 import { config } from "../wagmi";
-import { anvil, sepolia } from "wagmi/chains";
 
 const queryClient = new QueryClient();
 
