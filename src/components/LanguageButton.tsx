@@ -1,5 +1,7 @@
 "use client";
 
+import { Locale, locales } from "@/i18n/config";
+import { setUserLocale } from "@/i18n/cookies";
 import { Language } from "@mui/icons-material";
 import {
   Box,
@@ -9,11 +11,11 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 export default function LanguageButton() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const settings = ["Language 1", "Language 2"];
+  const [isPending, startTransition] = useTransition();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -21,6 +23,15 @@ export default function LanguageButton() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleClick = (value: string) => {
+    const locale = value as Locale;
+    startTransition(() => {
+      setUserLocale(locale);
+    });
+
+    handleCloseUserMenu();
   };
 
   return (
@@ -46,8 +57,8 @@ export default function LanguageButton() {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
+        {locales.map((setting) => (
+          <MenuItem key={setting} onClick={() => handleClick(setting)}>
             <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
           </MenuItem>
         ))}
