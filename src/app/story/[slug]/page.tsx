@@ -14,18 +14,20 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useAccount, useReadContract } from "wagmi";
 
 export default function Story() {
+  const t = useTranslations("Story");
   const pathname = usePathname();
   let storyID = pathname.substring(pathname.lastIndexOf("/") + 1);
 
   return (
     <Container maxWidth="lg">
       <Box sx={{ width: "100%", flexGrow: 1 }}>
-        <CommonAppBar title={`Story #${storyID}`} />
+        <CommonAppBar title={`${t("story")} #${storyID}`} />
         <StoryBody storyID={storyID} />
       </Box>
     </Container>
@@ -33,6 +35,7 @@ export default function Story() {
 }
 
 function StoryBody(props: { storyID: string }) {
+  const t = useTranslations("Story");
   const {
     data: story,
     error,
@@ -57,9 +60,12 @@ function StoryBody(props: { storyID: string }) {
     if (comment.isLog) {
       let text;
       if (comment.content == "buy") {
-        text = `Bought by ${shortAddr(comment.owner)} for ${comment.price} wei`;
+        text = t("buyLog", {
+          who: shortAddr(comment.owner),
+          price: comment.price.toString(),
+        });
       } else {
-        text = `Price changed to ${comment.price} wei`;
+        text = t("priceLog", { price: comment.price.toString() });
       }
       return (
         <ListItem key={i}>
@@ -98,11 +104,13 @@ function StoryBody(props: { storyID: string }) {
 }
 
 function BuyInput(props: { index: bigint; sellPrice: bigint }) {
+  const t = useTranslations("Story");
+
   return (
     <CommentInput
-      submitButtonText={"Buy"}
+      submitButtonText={t("buy")}
       price={props.sellPrice}
-      content={"Buy to comment"}
+      content={t("buyToComment")}
       writeValues={{
         address: getContractAddress(),
         abi: contractAbi,
@@ -115,6 +123,7 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
 }
 
 function SayInput(props: { index: bigint }) {
+  const t = useTranslations("Story");
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(BigInt(1000000000));
 

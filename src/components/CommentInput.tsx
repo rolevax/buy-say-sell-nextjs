@@ -11,10 +11,11 @@ import {
   TextField,
 } from "@mui/material";
 
-import { WriteContractParameters } from "@wagmi/core";
-import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { useQueryClient } from "@tanstack/react-query";
+import { WriteContractParameters } from "@wagmi/core";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 
 export default function CommentInput(props: {
   submitButtonText: string;
@@ -24,6 +25,7 @@ export default function CommentInput(props: {
   onContentChanged?: (s: string) => void;
   writeValues: WriteContractParameters;
 }) {
+  const t = useTranslations("CommentInput");
   const queryClient = useQueryClient();
   const {
     data: hash,
@@ -55,7 +57,7 @@ export default function CommentInput(props: {
       <form onSubmit={submit}>
         <TextField
           id="outlined-multiline-static"
-          label="Comment"
+          label={t("comment")}
           multiline
           fullWidth
           rows={2}
@@ -71,7 +73,9 @@ export default function CommentInput(props: {
           justifyContent="start"
         >
           <FormControl sx={{ m: 1 }} variant="outlined">
-            <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
+            <InputLabel htmlFor="standard-adornment-amount">
+              {t("price")}
+            </InputLabel>
             <Input
               id="standard-adornment-amount"
               startAdornment={
@@ -96,7 +100,7 @@ export default function CommentInput(props: {
       </form>
       {hash && isConfirming && (
         <Alert severity="success" icon={<HourglassTop />} variant="outlined">
-          Confirming transaction: {hash}
+          {t("confirmTx", { hash: hash })}
         </Alert>
       )}
       {error && (

@@ -15,5 +15,20 @@
     "buyLong": "每个帖子都有一个主人，买下即拥有。你也可以创建新帖子。",
     "sayLong": "作为主人，你是唯一可以回复的人。说点什么吧。",
     "sellLong": "把你的帖子上架到市场。谁会买你的帖子？为什么？多少钱？——这一切由你决定！"
-  }
+  },
+  "Story": {
+    "story": "故事",
+    "buyLog": "被 {who} 以 {price} wei 买下",
+    "priceLog": "价格修改为 {price} wei",
+    "buy": "买",
+    "buyToComment": "买下以评论",
+    "end": "end"
+  },
+  "CommentInput": {
+    "comment": "评论",
+    "price": "价格",
+    "confirmTx": "正在确认交易：{hash}",
+    "end": "end"
+  },
+  "End": {}
 }
