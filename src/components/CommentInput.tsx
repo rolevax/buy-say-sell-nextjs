@@ -4,17 +4,22 @@ import {
   Box,
   Button,
   FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
   Input,
   InputAdornment,
   InputLabel,
+  Radio,
+  RadioGroup,
   TextField,
+  Typography,
 } from "@mui/material";
 
 import { useQueryClient } from "@tanstack/react-query";
 import { WriteContractParameters } from "@wagmi/core";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 
 export default function CommentInput(props: {
@@ -38,6 +43,8 @@ export default function CommentInput(props: {
     useWaitForTransactionReceipt({
       hash,
     });
+  const wasListing = !!props.price;
+  const [isListing, setListing] = useState(wasListing);
   useEffect(() => {
     if (hash && isConfirmed) {
       queryClient.invalidateQueries();
@@ -54,9 +61,11 @@ export default function CommentInput(props: {
 
   return (
     <Box>
+      <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
+        Interactions
+      </Typography>
       <form onSubmit={submit}>
         <TextField
-          id="outlined-multiline-static"
           label={t("comment")}
           multiline
           fullWidth
@@ -64,20 +73,32 @@ export default function CommentInput(props: {
           value={props.content}
           onChange={(e) => props.onContentChanged?.(e.target.value)}
           disabled={!props.onContentChanged || isPending || isConfirming}
+          sx={{ mb: 3 }}
         />
-        <Grid
-          container
-          spacing={2}
-          direction="row"
-          alignItems="center"
-          justifyContent="start"
+        <FormLabel id="radio-buttons-group-label">
+          Marketing and Price
+        </FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby="radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          value={isListing}
+          onChange={(event) => {
+            setListing(event.target.value == "true");
+          }}
         >
-          <FormControl sx={{ m: 1 }} variant="outlined">
-            <InputLabel htmlFor="standard-adornment-amount">
-              {t("price")}
-            </InputLabel>
+          <FormControlLabel
+            value={false}
+            control={<Radio disabled={!props.onPriceChanged} />}
+            label="Unlist"
+          />
+          <FormControlLabel
+            value={true}
+            control={<Radio disabled={!props.onPriceChanged} />}
+            label="List"
+          />
+          <FormControl>
             <Input
-              id="standard-adornment-amount"
               startAdornment={
                 <InputAdornment position="start">$</InputAdornment>
               }
@@ -86,17 +107,20 @@ export default function CommentInput(props: {
                 let s = e.target.value;
                 props.onPriceChanged?.(BigInt(s));
               }}
-              disabled={!props.onPriceChanged || isPending || isConfirming}
+              disabled={
+                !props.onPriceChanged || !isListing || isPending || isConfirming
+              }
             />
           </FormControl>
-          <Button
-            variant="contained"
-            type="submit"
-            disabled={isPending || isConfirming}
-          >
-            {props.submitButtonText}
-          </Button>
-        </Grid>
+        </RadioGroup>
+        <Button
+          variant="contained"
+          type="submit"
+          disabled={isPending || isConfirming}
+          sx={{ mt: 2 }}
+        >
+          {props.submitButtonText}
+        </Button>
       </form>
       {hash && isConfirming && (
         <Alert severity="success" icon={<HourglassTop />} variant="outlined">
