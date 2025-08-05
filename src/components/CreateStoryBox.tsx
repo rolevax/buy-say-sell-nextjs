@@ -15,7 +15,7 @@ export default function CreateStoryBox() {
       onPriceChanged={setPrice}
       isListing={isListing}
       onListingChanged={setListing}
-      wasListing={true}
+      wasListing={"new"}
       content={content}
       onContentChanged={setContent}
       canSubmit={!!content.trim()}

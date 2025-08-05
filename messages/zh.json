@@ -20,6 +20,7 @@
     "story": "故事",
     "buyLog": "被 {who} 以 {price} wei 买下",
     "priceLog": "价格修改为 {price} wei",
+    "interactions": "交互",
     "buy": "买",
     "buyToComment": "买下以评论",
     "end": "end"
@@ -27,6 +28,11 @@
   "CommentInput": {
     "comment": "评论",
     "price": "价格",
+    "priceTitle": "市场策略与价格",
+    "list": "上架",
+    "unlist": "下架",
+    "keepList": "保持上架",
+    "keepUnlist": "保持下架",
     "post": "发布",
     "confirmTx": "正在确认交易：{hash}",
     "end": "end"

@@ -26,7 +26,7 @@ export default function CommentInput(props: {
   submitButtonText?: string;
   price: bigint;
   onPriceChanged?: (p: bigint) => void;
-  wasListing: boolean;
+  wasListing: "list" | "unlist" | "new";
   isListing: boolean;
   onListingChanged?: (l: boolean) => void;
   content: string;
@@ -63,9 +63,6 @@ export default function CommentInput(props: {
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
-        Interactions
-      </Typography>
       <form onSubmit={submit}>
         <TextField
           label={t("comment")}
@@ -77,9 +74,7 @@ export default function CommentInput(props: {
           disabled={!props.onContentChanged || isPending || isConfirming}
           sx={{ mb: 3 }}
         />
-        <FormLabel id="radio-buttons-group-label">
-          Marketing and Price
-        </FormLabel>
+        <FormLabel id="radio-buttons-group-label">{t("priceTitle")}</FormLabel>
         <RadioGroup
           row
           aria-labelledby="radio-buttons-group-label"
@@ -93,12 +88,12 @@ export default function CommentInput(props: {
           <FormControlLabel
             value={false}
             control={<Radio disabled={!props.onListingChanged} />}
-            label={props.wasListing ? "Unlist" : "Keep Unlisted"}
+            label={props.wasListing != "unlist" ? t("unlist") : t("keepUnlist")}
           />
           <FormControlLabel
             value={true}
             control={<Radio disabled={!props.onListingChanged} />}
-            label={props.wasListing ? "Keep Listing" : "List"}
+            label={props.wasListing == "list" ? t("keepList") : t("list")}
           />
           <FormControl>
             <Input

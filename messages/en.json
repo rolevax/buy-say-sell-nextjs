@@ -20,6 +20,7 @@
     "story": "Story",
     "buyLog": "Bought by {who} for {price} wei",
     "priceLog": "Price chagned to {price} wei",
+    "interactions": "Interactions",
     "buy": "Buy",
     "buyToComment": "Buy to comment",
     "end": "end"
@@ -27,6 +28,11 @@
   "CommentInput": {
     "comment": "Comment",
     "price": "Price",
+    "priceTitle": "Marketing and Price",
+    "list": "List",
+    "unlist": "Unlist",
+    "keepList": "Keep Listing",
+    "keepUnlist": "Keep Unlisted",
     "post": "Post",
     "confirmTx": "Confirming transaction: {hash}",
     "end": "end"

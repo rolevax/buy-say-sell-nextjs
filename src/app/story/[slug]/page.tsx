@@ -99,6 +99,9 @@ function StoryBody(props: { storyID: string }) {
   return (
     <Box>
       <List>{storyEvents}</List>
+      <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
+        {t("interactions")}
+      </Typography>
       {input}
       <Copyright />
     </Box>
@@ -113,7 +116,7 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
       submitButtonText={t("buy")}
       price={props.sellPrice}
       isListing={props.sellPrice > 0}
-      wasListing={props.sellPrice > 0}
+      wasListing={props.sellPrice > 0 ? "list" : "unlist"}
       content={t("buyToComment")}
       canSubmit={true}
       writeValues={{
@@ -142,7 +145,7 @@ function SayInput(props: { index: bigint; initPrice: bigint }) {
       onPriceChanged={setPrice}
       isListing={isListing}
       onListingChanged={setListing}
-      wasListing={wasListing}
+      wasListing={wasListing ? "list" : "unlist"}
       content={content}
       onContentChanged={setContent}
       canSubmit={
