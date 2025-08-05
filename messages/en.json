@@ -27,6 +27,7 @@
   "CommentInput": {
     "comment": "Comment",
     "price": "Price",
+    "post": "Post",
     "confirmTx": "Confirming transaction: {hash}",
     "end": "end"
   },

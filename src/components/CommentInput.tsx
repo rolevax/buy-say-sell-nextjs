@@ -23,11 +23,15 @@ import { useEffect, useState } from "react";
 import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 
 export default function CommentInput(props: {
-  submitButtonText: string;
+  submitButtonText?: string;
   price: bigint;
   onPriceChanged?: (p: bigint) => void;
+  wasListing: boolean;
+  isListing: boolean;
+  onListingChanged?: (l: boolean) => void;
   content: string;
   onContentChanged?: (s: string) => void;
+  canSubmit: boolean;
   writeValues: WriteContractParameters;
 }) {
   const t = useTranslations("CommentInput");
@@ -43,8 +47,6 @@ export default function CommentInput(props: {
     useWaitForTransactionReceipt({
       hash,
     });
-  const wasListing = !!props.price;
-  const [isListing, setListing] = useState(wasListing);
   useEffect(() => {
     if (hash && isConfirmed) {
       queryClient.invalidateQueries();
@@ -82,20 +84,21 @@ export default function CommentInput(props: {
           row
           aria-labelledby="radio-buttons-group-label"
           name="row-radio-buttons-group"
-          value={isListing}
+          value={props.isListing}
           onChange={(event) => {
-            setListing(event.target.value == "true");
+            const value = event.target.value == "true";
+            props.onListingChanged?.(value);
           }}
         >
           <FormControlLabel
             value={false}
-            control={<Radio disabled={!props.onPriceChanged} />}
-            label="Unlist"
+            control={<Radio disabled={!props.onListingChanged} />}
+            label={props.wasListing ? "Unlist" : "Keep Unlisted"}
           />
           <FormControlLabel
             value={true}
-            control={<Radio disabled={!props.onPriceChanged} />}
-            label="List"
+            control={<Radio disabled={!props.onListingChanged} />}
+            label={props.wasListing ? "Keep Listing" : "List"}
           />
           <FormControl>
             <Input
@@ -108,7 +111,10 @@ export default function CommentInput(props: {
                 props.onPriceChanged?.(BigInt(s));
               }}
               disabled={
-                !props.onPriceChanged || !isListing || isPending || isConfirming
+                !props.onPriceChanged ||
+                !props.isListing ||
+                isPending ||
+                isConfirming
               }
             />
           </FormControl>
@@ -116,10 +122,10 @@ export default function CommentInput(props: {
         <Button
           variant="contained"
           type="submit"
-          disabled={isPending || isConfirming}
-          sx={{ mt: 2 }}
+          disabled={isPending || isConfirming || !props.canSubmit}
+          sx={{ mt: 2, mb: 2 }}
         >
-          {props.submitButtonText}
+          {props.submitButtonText ?? t("post")}
         </Button>
       </form>
       {hash && isConfirming && (

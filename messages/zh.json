@@ -27,6 +27,7 @@
   "CommentInput": {
     "comment": "评论",
     "price": "价格",
+    "post": "发布",
     "confirmTx": "正在确认交易：{hash}",
     "end": "end"
   },

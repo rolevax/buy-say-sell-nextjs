@@ -5,6 +5,7 @@ import CommonAppBar from "@/components/CommonAppBar";
 import Copyright from "@/components/Copyright";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi, getContractAddress } from "@/contracts";
+import { WashOutlined } from "@mui/icons-material";
 import {
   Box,
   Container,
@@ -16,6 +17,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import { initScriptLoader } from "next/script";
 import { useState } from "react";
 import { useAccount, useReadContract } from "wagmi";
 
@@ -89,7 +91,7 @@ function StoryBody(props: { storyID: string }) {
   if (!address) {
     input = <PleaseConnect />;
   } else if (story.owner == address) {
-    input = <SayInput index={story.index} />;
+    input = <SayInput index={story.index} initPrice={story.sellPrice} />;
   } else {
     input = <BuyInput index={story.index} sellPrice={story.sellPrice} />;
   }
@@ -110,7 +112,10 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
     <CommentInput
       submitButtonText={t("buy")}
       price={props.sellPrice}
+      isListing={props.sellPrice > 0}
+      wasListing={props.sellPrice > 0}
       content={t("buyToComment")}
+      canSubmit={true}
       writeValues={{
         address: getContractAddress(),
         abi: contractAbi,
@@ -122,31 +127,42 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
   );
 }
 
-function SayInput(props: { index: bigint }) {
+function SayInput(props: { index: bigint; initPrice: bigint }) {
   const t = useTranslations("Story");
   const [content, setContent] = useState("");
-  const [price, setPrice] = useState(BigInt(1000000000));
+  const [price, setPrice] = useState(
+    props.initPrice == 0n ? 1000000000n : props.initPrice
+  );
+  const wasListing = props.initPrice > 0;
+  const [isListing, setListing] = useState(wasListing);
 
   return (
     <CommentInput
-      submitButtonText={"Say & Sell"}
       price={price}
       onPriceChanged={setPrice}
+      isListing={isListing}
+      onListingChanged={setListing}
+      wasListing={wasListing}
       content={content}
       onContentChanged={setContent}
+      canSubmit={
+        (!isListing && wasListing) ||
+        (isListing && price != props.initPrice && price > 0) ||
+        !!content
+      }
       writeValues={
         content.trim() == ""
           ? {
               address: getContractAddress(),
               abi: contractAbi,
               functionName: "changeSellPrice",
-              args: [props.index, price],
+              args: [props.index, isListing ? price : 0n],
             }
           : {
               address: getContractAddress(),
               abi: contractAbi,
               functionName: "addComment",
-              args: [props.index, content, price],
+              args: [props.index, content, isListing ? price : 0n],
             }
       }
     />
