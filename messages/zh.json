@@ -16,10 +16,16 @@
     "sayLong": "作为主人，你是唯一可以回复的人。说点什么吧。",
     "sellLong": "把你的帖子上架到市场。谁会买你的帖子？为什么？多少钱？——这一切由你决定！"
   },
+  "Home": {
+    "market": "故事市场",
+    "createStory": "创建新故事",
+    "end": "end"
+  },
   "Story": {
     "story": "故事",
     "buyLog": "被 {who} 以 {price} wei 买下",
     "priceLog": "价格修改为 {price} wei",
+    "unlistLog": "被下架",
     "interactions": "交互",
     "buy": "买",
     "buyToComment": "买下以评论",

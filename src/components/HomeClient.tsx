@@ -1,11 +1,14 @@
 "use client";
 
+import { Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { useAccount } from "wagmi";
 import CreateStoryBox from "./CreateStoryBox";
-import StoryList from "./StoryList";
 import PleaseConnect from "./PleaseConnect";
+import StoryList from "./StoryList";
 
 export default function HomeClient() {
+  const t = useTranslations("Home");
   const { address } = useAccount();
 
   if (!address) {
@@ -14,7 +17,13 @@ export default function HomeClient() {
 
   return (
     <div>
+      <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
+        {t("market")}
+      </Typography>
       <StoryList />
+      <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
+        {t("createStory")}
+      </Typography>
       <CreateStoryBox />
     </div>
   );

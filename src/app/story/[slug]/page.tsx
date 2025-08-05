@@ -66,6 +66,8 @@ function StoryBody(props: { storyID: string }) {
           who: shortAddr(comment.owner),
           price: comment.price.toString(),
         });
+      } else if (comment.price == 0n) {
+        text = t("unlistLog");
       } else {
         text = t("priceLog", { price: comment.price.toString() });
       }

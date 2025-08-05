@@ -16,10 +16,16 @@
     "sayLong": "As the owner, you are the only one who can comment to the post. Say something.",
     "sellLong": "List your post to the market. Who will buy your post? Why? How much? These are all up to you!"
   },
+  "Home": {
+    "market": "Story Market",
+    "createStory": "Create New Story",
+    "end": "end"
+  },
   "Story": {
     "story": "Story",
     "buyLog": "Bought by {who} for {price} wei",
     "priceLog": "Price chagned to {price} wei",
+    "unlistLog": "Unlisted",
     "interactions": "Interactions",
     "buy": "Buy",
     "buyToComment": "Buy to comment",
