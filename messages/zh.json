@@ -45,6 +45,10 @@
     "keepList": "保持上架",
     "keepUnlist": "保持下架",
     "post": "发布",
+    "estimatedCost": "预计花费：{price} wei",
+    "estimatedGas": "Gas 预估：{gas}",
+    "gasPrice": "Gas 单价：{price} wei",
+    "value": "支出：{price} wei",
     "confirmTx": "正在确认交易：{hash}",
     "end": "end"
   },

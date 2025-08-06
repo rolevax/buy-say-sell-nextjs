@@ -45,6 +45,10 @@
     "keepList": "Keep Listing",
     "keepUnlist": "Keep Unlisted",
     "post": "Post",
+    "estimatedCost": "Estimated cost: {price} wei",
+    "estimatedGas": "Estimated gas: {gas}",
+    "gasPrice": "Gas price: {price} wei",
+    "value": "Value: {price} wei",
     "confirmTx": "Confirming transaction: {hash}",
     "end": "end"
   },

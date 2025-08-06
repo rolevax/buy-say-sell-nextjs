@@ -1,10 +1,11 @@
-import { HourglassTop } from "@mui/icons-material";
+import { HelpOutline, HourglassTop } from "@mui/icons-material";
 import {
   Alert,
   Box,
   Button,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Grid,
   Input,
@@ -13,6 +14,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 
@@ -20,7 +22,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import { WriteContractParameters } from "@wagmi/core";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { encodeFunctionData } from "viem";
+import {
+  useAccount,
+  useEstimateGas,
+  useGasPrice,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 
 export default function CommentInput(props: {
   submitButtonText?: string;
@@ -54,6 +63,14 @@ export default function CommentInput(props: {
       props.onContentChanged?.("");
     }
   }, [hash, isConfirmed]);
+  const { address } = useAccount();
+  const { data: gas } = useEstimateGas({
+    account: address,
+    to: props.writeValues.address,
+    value: props.writeValues.value,
+    data: encodeFunctionData(props.writeValues),
+  });
+  const { data: gasPrice } = useGasPrice();
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -114,14 +131,39 @@ export default function CommentInput(props: {
             />
           </FormControl>
         </RadioGroup>
-        <Button
-          variant="contained"
-          type="submit"
-          disabled={isPending || isConfirming || !props.canSubmit}
-          sx={{ mt: 2, mb: 2 }}
-        >
-          {props.submitButtonText ?? t("post")}
-        </Button>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={isPending || isConfirming || !props.canSubmit}
+            sx={{ mt: 2, mb: 2, mr: 2 }}
+          >
+            {props.submitButtonText ?? t("post")}
+          </Button>
+          <FormHelperText>
+            {t("estimatedCost", {
+              price: (gas && gasPrice
+                ? (props.writeValues.value ?? 0n) + gas * gasPrice
+                : 0n
+              ).toString(),
+            })}
+          </FormHelperText>
+          <Tooltip
+            title={
+              <div>
+                {t("estimatedGas", { gas: gas?.toString() ?? "" })}
+                <br />
+                {t("gasPrice", { price: gasPrice?.toString() ?? "" })}
+                <br />
+                {t("value", {
+                  price: props.writeValues.value?.toString() ?? "0",
+                })}
+              </div>
+            }
+          >
+            <HelpOutline fontSize="small" sx={{ ml: 1 }} />
+          </Tooltip>
+        </div>
       </form>
       {hash && isConfirming && (
         <Alert severity="success" icon={<HourglassTop />} variant="outlined">
