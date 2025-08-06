@@ -5,10 +5,11 @@ import CommonAppBar from "@/components/CommonAppBar";
 import Copyright from "@/components/Copyright";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi, getContractAddress } from "@/contracts";
-import { WashOutlined } from "@mui/icons-material";
+import { SellSharp, WashOutlined } from "@mui/icons-material";
 import {
   Box,
   Container,
+  isMuiElement,
   List,
   ListItem,
   ListItemAvatar,
@@ -112,6 +113,7 @@ function StoryBody(props: { storyID: string }) {
 
 function BuyInput(props: { index: bigint; sellPrice: bigint }) {
   const t = useTranslations("Story");
+  const isSelling = props.sellPrice > 0;
 
   return (
     <CommentInput
@@ -120,7 +122,7 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
       isListing={props.sellPrice > 0}
       wasListing={props.sellPrice > 0 ? "list" : "unlist"}
       content={t("buyToComment")}
-      canSubmit={true}
+      canSubmit={isSelling}
       writeValues={{
         address: getContractAddress(),
         abi: contractAbi,
