@@ -27,6 +27,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { initScriptLoader } from "next/script";
 import { useState } from "react";
+import { formatEther } from "viem";
 import { useAccount, useReadContract } from "wagmi";
 
 export default function Story() {
@@ -72,12 +73,12 @@ function StoryBody(props: { storyID: string }) {
       if (comment.content == "buy") {
         text = t("buyLog", {
           who: shortAddr(comment.owner),
-          price: comment.price.toString(),
+          price: formatEther(comment.price),
         });
       } else if (comment.price == 0n) {
         text = t("unlistLog");
       } else {
-        text = t("priceLog", { price: comment.price.toString() });
+        text = t("priceLog", { price: formatEther(comment.price) });
       }
       return (
         <ListItem key={i}>
@@ -91,7 +92,9 @@ function StoryBody(props: { storyID: string }) {
         <ListItemAvatar>N</ListItemAvatar>
         <ListItemText
           primary={comment.content}
-          secondary={`${shortAddr(comment.owner)} ${comment.price} wei`}
+          secondary={`${shortAddr(comment.owner)} ${formatEther(
+            comment.price
+          )} ETH`}
         />
       </ListItem>
     );
@@ -131,7 +134,7 @@ function StoryBody(props: { storyID: string }) {
               </TableCell>
               <TableCell>
                 {story.sellPrice > 0
-                  ? t("sellingAt", { price: story.sellPrice.toString() })
+                  ? t("sellingAt", { price: formatEther(story.sellPrice) })
                   : t("notListed")}
               </TableCell>
             </TableRow>

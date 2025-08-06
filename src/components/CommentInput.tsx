@@ -22,7 +22,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { WriteContractParameters } from "@wagmi/core";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { encodeFunctionData } from "viem";
+import { encodeFunctionData, formatEther, formatGwei } from "viem";
 import {
   useAccount,
   useEstimateGas,
@@ -142,10 +142,11 @@ export default function CommentInput(props: {
           </Button>
           <FormHelperText>
             {t("estimatedCost", {
-              price: (gas && gasPrice
-                ? (props.writeValues.value ?? 0n) + gas * gasPrice
-                : 0n
-              ).toString(),
+              price: formatEther(
+                gas && gasPrice
+                  ? (props.writeValues.value ?? 0n) + gas * gasPrice
+                  : 0n
+              ),
             })}
           </FormHelperText>
           <Tooltip
@@ -153,10 +154,14 @@ export default function CommentInput(props: {
               <div>
                 {t("estimatedGas", { gas: gas?.toString() ?? "" })}
                 <br />
-                {t("gasPrice", { price: gasPrice?.toString() ?? "" })}
+                {t("gasPrice", {
+                  price: gasPrice ? formatGwei(gasPrice) : "",
+                })}
                 <br />
                 {t("value", {
-                  price: props.writeValues.value?.toString() ?? "0",
+                  price: props.writeValues.value
+                    ? formatEther(props.writeValues.value)
+                    : "0",
                 })}
               </div>
             }
