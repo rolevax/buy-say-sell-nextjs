@@ -8,12 +8,19 @@ import { contractAbi, getContractAddress } from "@/contracts";
 import { SellSharp, WashOutlined } from "@mui/icons-material";
 import {
   Box,
+  Card,
   Container,
   isMuiElement,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
   Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -102,6 +109,35 @@ function StoryBody(props: { storyID: string }) {
   return (
     <Box>
       <List>{storyEvents}</List>
+      <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
+        {t("status")}
+      </Typography>
+      <TableContainer sx={{ display: "inline-block" }} component={Paper}>
+        <Table style={{ width: "auto" }}>
+          <TableBody>
+            <TableRow
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {t("owner")}
+              </TableCell>
+              <TableCell>{story.owner}</TableCell>
+            </TableRow>
+            <TableRow
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {t("listing")}
+              </TableCell>
+              <TableCell>
+                {story.sellPrice > 0
+                  ? t("sellingAt", { price: story.sellPrice.toString() })
+                  : t("notListed")}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
       <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
         {t("interactions")}
       </Typography>

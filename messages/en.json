@@ -14,7 +14,7 @@
     "sellTitle": "And sell it!",
     "buyLong": "Each story has one unique owner. Buy to own the story. You can also create new stories.",
     "sayLong": "As the owner, you are the only one who can comment to the story. Say something.",
-    "sellLong": "List your story to the market. Your words values the story."
+    "sellLong": "List your story to the market. Your words value the story."
   },
   "Home": {
     "market": "Story Market",
@@ -26,6 +26,11 @@
     "buyLog": "Bought by {who} for {price} wei",
     "priceLog": "Price chagned to {price} wei",
     "unlistLog": "Unlisted",
+    "status": "Story Status",
+    "owner": "Owner",
+    "listing": "Listing",
+    "sellingAt": "Selling at {price} wei",
+    "notListed": "Not listed",
     "interactions": "Interactions",
     "buy": "Buy",
     "buyToComment": "Buy to comment",

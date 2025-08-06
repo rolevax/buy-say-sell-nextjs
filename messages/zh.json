@@ -14,7 +14,7 @@
     "sellTitle": "把它卖掉！",
     "buyLong": "每个故事都有一个主人，买下即拥有。你也可以创建新故事。",
     "sayLong": "作为故事的主人，你是唯一可以回复的人。说点什么吧。",
-    "sellLong": "把你的故事上架到市场。你的言论为故事赋予价格。"
+    "sellLong": "把你的故事上架到市场。你的言论为故事赋予价值。"
   },
   "Home": {
     "market": "故事市场",
@@ -26,6 +26,11 @@
     "buyLog": "被 {who} 以 {price} wei 买下",
     "priceLog": "价格修改为 {price} wei",
     "unlistLog": "被下架",
+    "status": "故事状态",
+    "owner": "主人",
+    "listing": "上架状态",
+    "sellingAt": "正在以 {price} wei 出售",
+    "notListed": "未上架",
     "interactions": "交互",
     "buy": "买",
     "buyToComment": "买下以评论",
