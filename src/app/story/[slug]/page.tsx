@@ -193,7 +193,7 @@ function SayInput(props: { index: bigint; initPrice: bigint }) {
       onContentChanged={setContent}
       canSubmit={
         (!isListing && wasListing) ||
-        (isListing && price != props.initPrice && price > 0) ||
+        (isListing && price != props.initPrice && price > 0n) ||
         !!content
       }
       writeValues={

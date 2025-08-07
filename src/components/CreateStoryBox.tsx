@@ -18,7 +18,7 @@ export default function CreateStoryBox() {
       wasListing={"new"}
       content={content}
       onContentChanged={setContent}
-      canSubmit={!!content.trim()}
+      canSubmit={!!content.trim() && (!isListing || price > 0n)}
       writeValues={{
         address: getContractAddress(),
         abi: contractAbi,

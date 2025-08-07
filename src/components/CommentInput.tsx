@@ -7,21 +7,16 @@ import {
   FormControlLabel,
   FormHelperText,
   FormLabel,
-  Grid,
-  Input,
-  InputAdornment,
-  InputLabel,
   Radio,
   RadioGroup,
   TextField,
   Tooltip,
-  Typography,
 } from "@mui/material";
 
 import { useQueryClient } from "@tanstack/react-query";
 import { WriteContractParameters } from "@wagmi/core";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { encodeFunctionData, formatEther, formatGwei } from "viem";
 import {
   useAccount,
@@ -30,6 +25,7 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
+import EtherInput from "./EtherInput";
 
 export default function CommentInput(props: {
   submitButtonText?: string;
@@ -113,14 +109,10 @@ export default function CommentInput(props: {
             label={props.wasListing == "list" ? t("keepList") : t("list")}
           />
           <FormControl>
-            <Input
-              startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
-              }
-              value={props.price}
-              onChange={(e) => {
-                let s = e.target.value;
-                props.onPriceChanged?.(BigInt(s));
+            <EtherInput
+              initPrice={props.price}
+              onPriceChanged={(price) => {
+                props.onPriceChanged?.(price ?? 0n);
               }}
               disabled={
                 !props.onPriceChanged ||
