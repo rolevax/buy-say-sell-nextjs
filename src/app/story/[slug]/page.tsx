@@ -73,19 +73,7 @@ function StoryBody(props: { storyID: string }) {
       } else {
         text = t("priceLog", { price: formatEther(comment.price) });
       }
-      return (
-        <TableRow
-          key={i}
-          sx={{
-            display: "flex",
-            "&:last-child td, &:last-child th": { border: 0 },
-          }}
-        >
-          <TableCell sx={{ flexGrow: 1 }}>
-            <Typography color="secondary">{text}</Typography>
-          </TableCell>
-        </TableRow>
-      );
+      return <LogRow key={i} text={text} timestamp={comment.timestamp} />;
     }
 
     return (
@@ -192,6 +180,36 @@ function EventRow(props: {
         <Typography variant="body2" color="text.secondary">
           {formatEther(props.price)} ETH
         </Typography>
+      </TableCell>
+    </TableRow>
+  );
+}
+
+function LogRow(props: { key: Key; text: string; timestamp: bigint }) {
+  const format = useFormatter();
+
+  return (
+    <TableRow
+      key={props.key}
+      sx={{
+        display: "flex",
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell sx={{ width: "auto" }} component="th" scope="row">
+        <Typography variant="body2" color="text.secondary">
+          {format.dateTime(new Date(Number(props.timestamp) * 1000), {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })}
+        </Typography>
+      </TableCell>
+      <TableCell sx={{ flexGrow: 1 }}>
+        <Typography color="secondary">{props.text}</Typography>
       </TableCell>
     </TableRow>
   );
