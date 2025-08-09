@@ -17,9 +17,9 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { Key, useState } from "react";
 import { formatEther } from "viem";
 import { useAccount, useReadContract } from "wagmi";
 
@@ -89,27 +89,13 @@ function StoryBody(props: { storyID: string }) {
     }
 
     return (
-      <TableRow
+      <EventRow
         key={i}
-        sx={{
-          display: "flex",
-          "&:last-child td, &:last-child th": { border: 0 },
-        }}
-      >
-        <TableCell sx={{ width: "auto" }} component="th" scope="row">
-          {shortAddr(comment.owner)}
-        </TableCell>
-        <TableCell sx={{ flexGrow: 1 }}>
-          {comment.content}
-          <Divider sx={{ mt: 1, mb: 1 }} />
-          <Typography variant="body2" color="text.secondary">
-            {comment.timestamp}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {formatEther(comment.price)} ETH
-          </Typography>
-        </TableCell>
-      </TableRow>
+        address={comment.owner}
+        content={comment.content}
+        timestamp={comment.timestamp}
+        price={comment.price}
+      />
     );
   });
 
@@ -167,6 +153,47 @@ function StoryBody(props: { storyID: string }) {
       {input}
       <Copyright />
     </Box>
+  );
+}
+
+function EventRow(props: {
+  key: Key;
+  address: `0x${string}`;
+  content: string;
+  timestamp: bigint;
+  price: bigint;
+}) {
+  const format = useFormatter();
+
+  return (
+    <TableRow
+      key={props.key}
+      sx={{
+        display: "flex",
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell sx={{ width: "auto" }} component="th" scope="row">
+        {shortAddr(props.address)}
+      </TableCell>
+      <TableCell sx={{ flexGrow: 1 }}>
+        <Typography>{props.content}</Typography>
+        <Divider sx={{ mt: 1, mb: 1 }} />
+        <Typography variant="body2" color="text.secondary">
+          {format.dateTime(new Date(Number(props.timestamp) * 1000), {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {formatEther(props.price)} ETH
+        </Typography>
+      </TableCell>
+    </TableRow>
   );
 }
 
