@@ -23,6 +23,7 @@
   },
   "Story": {
     "story": "故事",
+    "comments": "故事内容",
     "buyLog": "被 {who} 以 {price} ETH 买下",
     "priceLog": "价格修改为 {price} ETH",
     "unlistLog": "被下架",

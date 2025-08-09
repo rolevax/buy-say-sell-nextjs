@@ -193,6 +193,11 @@ export const contractAbi = [
                 internalType: "uint256",
               },
               {
+                name: "timestamp",
+                type: "uint256",
+                internalType: "uint256",
+              },
+              {
                 name: "isLog",
                 type: "bool",
                 internalType: "bool",
@@ -252,6 +257,11 @@ export const contractAbi = [
               },
               {
                 name: "price",
+                type: "uint256",
+                internalType: "uint256",
+              },
+              {
+                name: "timestamp",
                 type: "uint256",
                 internalType: "uint256",
               },

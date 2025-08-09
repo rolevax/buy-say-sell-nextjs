@@ -23,6 +23,7 @@
   },
   "Story": {
     "story": "Story",
+    "comments": "Story Contents",
     "buyLog": "Bought by {who} for {price} ETH",
     "priceLog": "Price chagned to {price} ETH",
     "unlistLog": "Unlisted",

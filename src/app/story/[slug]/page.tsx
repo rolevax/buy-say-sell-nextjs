@@ -5,16 +5,10 @@ import CommonAppBar from "@/components/CommonAppBar";
 import Copyright from "@/components/Copyright";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi, getContractAddress } from "@/contracts";
-import { SellSharp, WashOutlined } from "@mui/icons-material";
 import {
   Box,
-  Card,
   Container,
-  isMuiElement,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
+  Divider,
   Paper,
   Table,
   TableBody,
@@ -25,7 +19,6 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { initScriptLoader } from "next/script";
 import { useState } from "react";
 import { formatEther } from "viem";
 import { useAccount, useReadContract } from "wagmi";
@@ -81,22 +74,42 @@ function StoryBody(props: { storyID: string }) {
         text = t("priceLog", { price: formatEther(comment.price) });
       }
       return (
-        <ListItem key={i}>
-          <Typography color="secondary">{text}</Typography>
-        </ListItem>
+        <TableRow
+          key={i}
+          sx={{
+            display: "flex",
+            "&:last-child td, &:last-child th": { border: 0 },
+          }}
+        >
+          <TableCell sx={{ flexGrow: 1 }}>
+            <Typography color="secondary">{text}</Typography>
+          </TableCell>
+        </TableRow>
       );
     }
 
     return (
-      <ListItem key={i}>
-        <ListItemAvatar>N</ListItemAvatar>
-        <ListItemText
-          primary={comment.content}
-          secondary={`${shortAddr(comment.owner)} ${formatEther(
-            comment.price
-          )} ETH`}
-        />
-      </ListItem>
+      <TableRow
+        key={i}
+        sx={{
+          display: "flex",
+          "&:last-child td, &:last-child th": { border: 0 },
+        }}
+      >
+        <TableCell sx={{ width: "auto" }} component="th" scope="row">
+          {shortAddr(comment.owner)}
+        </TableCell>
+        <TableCell sx={{ flexGrow: 1 }}>
+          {comment.content}
+          <Divider sx={{ mt: 1, mb: 1 }} />
+          <Typography variant="body2" color="text.secondary">
+            {comment.timestamp}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {formatEther(comment.price)} ETH
+          </Typography>
+        </TableCell>
+      </TableRow>
     );
   });
 
@@ -111,7 +124,14 @@ function StoryBody(props: { storyID: string }) {
 
   return (
     <Box>
-      <List>{storyEvents}</List>
+      <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
+        {t("comments")}
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableBody>{storyEvents}</TableBody>
+        </Table>
+      </TableContainer>
       <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
         {t("status")}
       </Typography>
