@@ -83,7 +83,9 @@ export default function CommentInput(props: {
           fullWidth
           rows={2}
           value={props.content}
-          onChange={(e) => props.onContentChanged?.(e.target.value)}
+          onChange={(
+            e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+          ) => props.onContentChanged?.(e.target.value)}
           disabled={!props.onContentChanged || isPending || isConfirming}
           sx={{ mb: 3 }}
         />
