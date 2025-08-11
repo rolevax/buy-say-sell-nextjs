@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { useFormatter, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { Key, useState } from "react";
+import { Key, ReactNode, useState } from "react";
 import { formatEther } from "viem";
 import { useAccount, useReadContract } from "wagmi";
 
@@ -73,17 +73,27 @@ function StoryBody(props: { storyID: string }) {
       } else {
         text = t("priceLog", { price: formatEther(comment.price) });
       }
-      return <LogRow key={i} text={text} timestamp={comment.timestamp} />;
+      return (
+        <EventRow
+          key={i}
+          address={comment.owner}
+          timestamp={comment.timestamp}
+          price={comment.price}
+        >
+          <Typography color="secondary">{text}</Typography>
+        </EventRow>
+      );
     }
 
     return (
       <EventRow
         key={i}
         address={comment.owner}
-        content={comment.content}
         timestamp={comment.timestamp}
         price={comment.price}
-      />
+      >
+        <Typography>{comment.content}</Typography>
+      </EventRow>
     );
   });
 
@@ -102,7 +112,7 @@ function StoryBody(props: { storyID: string }) {
         {t("comments")}
       </Typography>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table>
           <TableBody>{storyEvents}</TableBody>
         </Table>
       </TableContainer>
@@ -147,9 +157,9 @@ function StoryBody(props: { storyID: string }) {
 function EventRow(props: {
   key: Key;
   address: `0x${string}`;
-  content: string;
   timestamp: bigint;
   price: bigint;
+  children: ReactNode;
 }) {
   const format = useFormatter();
 
@@ -157,26 +167,16 @@ function EventRow(props: {
     <TableRow
       key={props.key}
       sx={{
-        display: "flex",
         "&:last-child td, &:last-child th": { border: 0 },
       }}
     >
-      <TableCell sx={{ width: "auto" }} component="th" scope="row">
+      <TableCell sx={{ width: 24 }} component="th" scope="row">
         {shortAddr(props.address)}
       </TableCell>
-      <TableCell sx={{ flexGrow: 1 }}>
-        <Typography>{props.content}</Typography>
+      <TableCell>
+        {props.children}
         <Divider sx={{ mt: 1, mb: 1 }} />
-        <Typography variant="body2" color="text.secondary">
-          {format.dateTime(new Date(Number(props.timestamp) * 1000), {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          })}
-        </Typography>
+        <TimeText timestamp={props.timestamp} />
         <Typography variant="body2" color="text.secondary">
           {formatEther(props.price)} ETH
         </Typography>
@@ -185,33 +185,20 @@ function EventRow(props: {
   );
 }
 
-function LogRow(props: { key: Key; text: string; timestamp: bigint }) {
+function TimeText(props: { timestamp: bigint }) {
   const format = useFormatter();
 
   return (
-    <TableRow
-      key={props.key}
-      sx={{
-        display: "flex",
-        "&:last-child td, &:last-child th": { border: 0 },
-      }}
-    >
-      <TableCell sx={{ width: "auto" }} component="th" scope="row">
-        <Typography variant="body2" color="text.secondary">
-          {format.dateTime(new Date(Number(props.timestamp) * 1000), {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          })}
-        </Typography>
-      </TableCell>
-      <TableCell sx={{ flexGrow: 1 }}>
-        <Typography color="secondary">{props.text}</Typography>
-      </TableCell>
-    </TableRow>
+    <Typography variant="body2" color="text.secondary">
+      {format.dateTime(new Date(Number(props.timestamp) * 1000), {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      })}
+    </Typography>
   );
 }
 
