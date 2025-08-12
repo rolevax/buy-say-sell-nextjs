@@ -7,10 +7,8 @@ import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi, getContractAddress } from "@/contracts";
 import {
   Discount,
-  Favorite,
   RemoveShoppingCart,
   ShoppingCart,
-  Tag,
 } from "@mui/icons-material";
 import {
   Avatar,
