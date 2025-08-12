@@ -6,6 +6,13 @@ import Copyright from "@/components/Copyright";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi, getContractAddress } from "@/contracts";
 import {
+  Discount,
+  Favorite,
+  RemoveShoppingCart,
+  ShoppingCart,
+  Tag,
+} from "@mui/icons-material";
+import {
   Avatar,
   Box,
   Card,
@@ -18,6 +25,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useFormatter, useTranslations } from "next-intl";
@@ -65,16 +73,22 @@ function StoryBody(props: { storyID: string }) {
 
   let storyEvents = story.comments.map((comment, i) => {
     if (comment.isLog) {
-      let text;
+      let children;
       if (comment.content == "buy") {
-        text = t("buyLog", {
-          who: shortAddr(comment.owner),
-          price: formatEther(comment.price),
-        });
+        children = [
+          <ShoppingCart />,
+          <Typography color="secondary">{t("buyLog")}</Typography>,
+        ];
       } else if (comment.price == 0n) {
-        text = t("unlistLog");
+        children = [
+          <RemoveShoppingCart />,
+          <Typography color="secondary">{t("unlistLog")}</Typography>,
+        ];
       } else {
-        text = t("priceLog", { price: formatEther(comment.price) });
+        children = [
+          <Discount />,
+          <Typography color="secondary">{t("priceLog")}</Typography>,
+        ];
       }
       return (
         <EventRow
@@ -83,7 +97,9 @@ function StoryBody(props: { storyID: string }) {
           timestamp={comment.timestamp}
           price={comment.price}
         >
-          <Typography color="secondary">{text}</Typography>
+          <Stack direction="row" spacing={1}>
+            {children}
+          </Stack>
         </EventRow>
       );
     }
@@ -95,7 +111,9 @@ function StoryBody(props: { storyID: string }) {
         timestamp={comment.timestamp}
         price={comment.price}
       >
-        <Typography>{comment.content}</Typography>
+        <Typography variant="body1" color="textPrimary">
+          {comment.content}
+        </Typography>
       </EventRow>
     );
   });
@@ -173,7 +191,11 @@ function EventRow(props: {
         "td, th": { border: 0 },
       }}
     >
-      <TableCell sx={{ width: 24 }} component="th" scope="row">
+      <TableCell
+        sx={{ width: "1px", alignContent: "start" }}
+        component="th"
+        scope="row"
+      >
         <Avatar>N</Avatar>
       </TableCell>
       <TableCell>
@@ -182,10 +204,13 @@ function EventRow(props: {
             direction="row"
             spacing={1}
             divider={<Divider orientation="vertical" flexItem />}
+            sx={{ mb: 1 }}
           >
-            <Typography variant="caption">
-              {shortAddr(props.address)}
-            </Typography>
+            <Tooltip title={props.address} arrow>
+              <Typography variant="caption">
+                {shortAddr(props.address)}
+              </Typography>
+            </Tooltip>
             <Typography variant="caption" color="secondary">
               {formatEther(props.price)} ETH
             </Typography>

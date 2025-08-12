@@ -24,9 +24,9 @@
   "Story": {
     "story": "故事",
     "comments": "故事内容",
-    "buyLog": "被 {who} 以 {price} ETH 买下",
-    "priceLog": "价格修改为 {price} ETH",
-    "unlistLog": "被下架",
+    "buyLog": "买下",
+    "priceLog": "修改价格",
+    "unlistLog": "下架",
     "status": "故事状态",
     "owner": "主人",
     "listing": "上架状态",

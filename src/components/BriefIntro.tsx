@@ -2,9 +2,9 @@
 
 import {
   AddComment,
+  Discount,
   ExpandLess,
   ExpandMore,
-  Sell,
   ShoppingCart,
 } from "@mui/icons-material";
 import {
@@ -14,7 +14,6 @@ import {
   ListItemIcon,
   ListItemText,
   ListSubheader,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
@@ -26,7 +25,7 @@ export default function BriefIntro() {
   const items = [];
   const titles = [t("buyTitle"), t("sayTitle"), t("sellTitle")];
   const contents = [t("buyLong"), t("sayLong"), t("sellLong")];
-  const icons = [<ShoppingCart />, <AddComment />, <Sell />];
+  const icons = [<ShoppingCart />, <AddComment />, <Discount />];
 
   for (let i = 0; i < titles.length; i++) {
     items.push(
