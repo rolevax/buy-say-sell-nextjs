@@ -6,10 +6,13 @@ import Copyright from "@/components/Copyright";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi, getContractAddress } from "@/contracts";
 import {
+  Avatar,
   Box,
+  Card,
   Container,
   Divider,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -111,7 +114,7 @@ function StoryBody(props: { storyID: string }) {
       <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
         {t("comments")}
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table>
           <TableBody>{storyEvents}</TableBody>
         </Table>
@@ -167,19 +170,29 @@ function EventRow(props: {
     <TableRow
       key={props.key}
       sx={{
-        "&:last-child td, &:last-child th": { border: 0 },
+        "td, th": { border: 0 },
       }}
     >
       <TableCell sx={{ width: 24 }} component="th" scope="row">
-        {shortAddr(props.address)}
+        <Avatar>N</Avatar>
       </TableCell>
       <TableCell>
-        {props.children}
-        <Divider sx={{ mt: 1, mb: 1 }} />
-        <TimeText timestamp={props.timestamp} />
-        <Typography variant="body2" color="text.secondary">
-          {formatEther(props.price)} ETH
-        </Typography>
+        <Card sx={{ pt: 1, pb: 1, pl: 2, pr: 2 }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            divider={<Divider orientation="vertical" flexItem />}
+          >
+            <Typography variant="caption">
+              {shortAddr(props.address)}
+            </Typography>
+            <Typography variant="caption" color="secondary">
+              {formatEther(props.price)} ETH
+            </Typography>
+            <TimeText timestamp={props.timestamp} />
+          </Stack>
+          {props.children}
+        </Card>
       </TableCell>
     </TableRow>
   );
@@ -189,7 +202,7 @@ function TimeText(props: { timestamp: bigint }) {
   const format = useFormatter();
 
   return (
-    <Typography variant="body2" color="text.secondary">
+    <Typography variant="caption" color="secondary">
       {format.dateTime(new Date(Number(props.timestamp) * 1000), {
         year: "numeric",
         month: "short",
