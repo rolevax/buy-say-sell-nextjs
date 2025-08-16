@@ -55,8 +55,19 @@
   },
   "Docs": {
     "title": "文档",
-    "about": "关于买说卖",
-    "contributers": "贡献者",
+    "about": {
+      "title": "关于买说卖",
+      "what": {
+        "title": "什么鬼",
+        "p1": "买说卖是一个只有故事的主能评论的社交平台。",
+        "end": "end"
+      },
+      "end": "end"
+    },
+    "contributers": {
+      "title": "贡献者",
+      "end": "end"
+    },
     "end": "end"
   },
   "End": {}

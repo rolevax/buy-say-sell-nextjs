@@ -36,7 +36,7 @@ function DocsBody() {
   const t = useTranslations("Docs");
 
   const [index, setIndex] = useState(0);
-  const titles = [t("about"), t("contributers")];
+  const titles = [t("about.title"), t("contributers.title")];
   const contents = [<AboutContent />, <ContributerContent />];
 
   return (
@@ -58,16 +58,15 @@ function DocsBody() {
 }
 
 function AboutContent() {
+  const t = useTranslations("Docs");
+
   return (
     <Stack direction="column">
-      <Typography variant="h4">About Buy Say Sell</Typography>
+      <Typography variant="h4">{t("about.title")}</Typography>
       <Typography variant="h5" sx={{ mt: 3, mb: 1 }}>
-        What
+        {t("about.what.title")}
       </Typography>
-      <Typography variant="body1">
-        Buy Say Sell is an altered social media where only the owner of a story
-        can comment to it.
-      </Typography>
+      <Typography variant="body1">{t("about.what.p1")}</Typography>
       <Typography variant="h5" sx={{ mt: 3, mb: 1 }}>
         Motivation
       </Typography>
@@ -113,7 +112,7 @@ function ContributerContent() {
 
   return (
     <Stack direction="column">
-      <Typography variant="h4">{t("contributers")}</Typography>
+      <Typography variant="h4">{t("contributers.title")}</Typography>
       <ul>
         <li>
           <Link href="https://github.com/rolevax">

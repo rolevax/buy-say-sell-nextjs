@@ -55,8 +55,19 @@
   },
   "Docs": {
     "title": "Docs",
-    "about": "About Buy Say Sell",
-    "contributers": "Contributers",
+    "about": {
+      "title": "About Buy Say Sell",
+      "what": {
+        "title": "What",
+        "p1": "Buy Say Sell is an altered social media where only the owner of a story can comment to it.",
+        "end": "end"
+      },
+      "end": "end"
+    },
+    "contributers": {
+      "title": "Contributers",
+      "end": "end"
+    },
     "end": "end"
   },
   "End": {}
