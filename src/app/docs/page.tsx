@@ -75,8 +75,9 @@ function AboutContent() {
       <MyH2>{t("about.what.title")}</MyH2>
       <MyBody>{t("about.what.p1")}</MyBody>
       <MyH2>{t("about.motivation.title")}</MyH2>
-      <MyBody>{t("about.motivation.p1")}</MyBody>
       <MyBody>
+        {t("about.motivation.p1")}
+        <MyBr />
         The story can be constructive or debative. As people want to sell the
         story, they stop saying trash and think hard on saying something
         valueable. By this we keep idiots away from this platform.
@@ -86,7 +87,7 @@ function AboutContent() {
         Buy Say Sell is a decenteralized application based on Ethereum. The
         service is purely on-chain an there is no centeralized server. The
         frontend webpage is open-sourced and anyone can deploy it.
-        <br />
+        <MyBr />
         The stories implements the ERC-721 standard. You can also trade the
         stories outside this platform, like wallets and standard NFT markets.
       </MyBody>
@@ -94,7 +95,7 @@ function AboutContent() {
       <MyBody>
         Currently Buy Say Sell is gas-only. This application is developed mostly
         for experimental purpose.
-        <br />
+        <MyBr />
         If you don't want to spend any real money for gas, there is also testnet
         contract deployed. Just switch network to Sepolia and get some ETH from
         faucets.
@@ -183,8 +184,12 @@ function MyH2({ children }: { children: ReactNode }) {
 
 function MyBody({ children }: { children: ReactNode }) {
   return (
-    <Typography variant="body1" sx={{ mb: 3 }}>
+    <Typography variant="body1" sx={{ mb: 4 }} component="div">
       {children}
     </Typography>
   );
+}
+
+function MyBr() {
+  return <Box sx={{ mb: 1 }} />;
 }
