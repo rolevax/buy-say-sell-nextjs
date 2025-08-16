@@ -2,9 +2,9 @@
 
 import CommonAppBar from "@/components/CommonAppBar";
 import Copyright from "@/components/Copyright";
+import { getContractAddressOf } from "@/contracts";
 import { GitHub } from "@mui/icons-material";
 import {
-  Divider,
   Link,
   List,
   ListItem,
@@ -16,7 +16,8 @@ import {
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+import { sepolia } from "wagmi/chains";
 
 export default function About() {
   const t = useTranslations("Docs");
@@ -36,8 +37,16 @@ function DocsBody() {
   const t = useTranslations("Docs");
 
   const [index, setIndex] = useState(0);
-  const titles = [t("about.title"), t("contributers.title")];
-  const contents = [<AboutContent />, <ContributerContent />];
+  const titles = [
+    t("about.title"),
+    t("contract.title"),
+    t("contributers.title"),
+  ];
+  const contents = [
+    <AboutContent />,
+    <ContractContent />,
+    <ContributerContent />,
+  ];
 
   return (
     <Stack direction="row" sx={{ width: "100%" }}>
@@ -62,47 +71,76 @@ function AboutContent() {
 
   return (
     <Stack direction="column">
-      <Typography variant="h4">{t("about.title")}</Typography>
-      <Typography variant="h5" sx={{ mt: 3, mb: 1 }}>
-        {t("about.what.title")}
-      </Typography>
-      <Typography variant="body1">{t("about.what.p1")}</Typography>
-      <Typography variant="h5" sx={{ mt: 3, mb: 1 }}>
-        Motivation
-      </Typography>
-      <Typography variant="body1">
-        People bla bla bla too much on Internet. Their words are trash. So build
-        a place where people always say something interesting. By interesting we
-        mean words that ignite people to comments to it, and those comments
-        contribute more value to the story. People really want to express their
-        idea even it requires money.
-        <br />
+      <MyH1>{t("about.title")}</MyH1>
+      <MyH2>{t("about.what.title")}</MyH2>
+      <MyBody>{t("about.what.p1")}</MyBody>
+      <MyH2>{t("about.motivation.title")}</MyH2>
+      <MyBody>{t("about.motivation.p1")}</MyBody>
+      <MyBody>
         The story can be constructive or debative. As people want to sell the
         story, they stop saying trash and think hard on saying something
         valueable. By this we keep idiots away from this platform.
-      </Typography>
-      <Typography variant="h5" sx={{ mt: 3, mb: 1 }}>
-        Technical Overview
-      </Typography>
-      <Typography variant="body1">
+      </MyBody>
+      <MyH2>Technical Overview</MyH2>
+      <MyBody>
         Buy Say Sell is a decenteralized application based on Ethereum. The
         service is purely on-chain an there is no centeralized server. The
         frontend webpage is open-sourced and anyone can deploy it.
         <br />
         The stories implements the ERC-721 standard. You can also trade the
         stories outside this platform, like wallets and standard NFT markets.
-      </Typography>
-      <Typography variant="h5" sx={{ mt: 3, mb: 1 }}>
-        Pricing
-      </Typography>
-      <Typography variant="body1">
+      </MyBody>
+      <MyH2>Pricing</MyH2>
+      <MyBody>
         Currently Buy Say Sell is gas-only. This application is developed mostly
         for experimental purpose.
         <br />
         If you don't want to spend any real money for gas, there is also testnet
         contract deployed. Just switch network to Sepolia and get some ETH from
         faucets.
-      </Typography>
+      </MyBody>
+    </Stack>
+  );
+}
+
+function ContractContent() {
+  const t = useTranslations("Docs");
+  const sepoliaAddress = getContractAddressOf(sepolia.id);
+
+  return (
+    <Stack direction="column">
+      <MyH1>{t("contract.title")}</MyH1>
+      <MyBody>
+        Buy Say Sell consists of only two parts: the contract and the web page.
+        Their source can be checked at:
+        <ul>
+          <li>
+            <Link href={""} target="_blank" rel="noopener">
+              Contract
+            </Link>
+          </li>
+          <li>
+            <Link href={""} target="_blank" rel="noopener">
+              Web Page
+            </Link>
+          </li>
+        </ul>
+      </MyBody>
+      <MyBody>
+        The contract addresses for each networks are:
+        <ul>
+          <li>
+            Sepolia:{" "}
+            <Link
+              href={`https://sepolia.etherscan.io/address/${sepoliaAddress}`}
+              target="_blank"
+              rel="noopener"
+            >
+              {sepoliaAddress}
+            </Link>
+          </li>
+        </ul>
+      </MyBody>
     </Stack>
   );
 }
@@ -112,7 +150,7 @@ function ContributerContent() {
 
   return (
     <Stack direction="column">
-      <Typography variant="h4">{t("contributers.title")}</Typography>
+      <MyH1>{t("contributers.title")}</MyH1>
       <ul>
         <li>
           <Link href="https://github.com/rolevax">
@@ -124,5 +162,29 @@ function ContributerContent() {
         </li>
       </ul>
     </Stack>
+  );
+}
+
+function MyH1({ children }: { children: ReactNode }) {
+  return (
+    <Typography variant="h4" sx={{ mb: 4 }}>
+      {children}
+    </Typography>
+  );
+}
+
+function MyH2({ children }: { children: ReactNode }) {
+  return (
+    <Typography variant="h5" sx={{ mb: 2 }}>
+      {children}
+    </Typography>
+  );
+}
+
+function MyBody({ children }: { children: ReactNode }) {
+  return (
+    <Typography variant="body1" sx={{ mb: 3 }}>
+      {children}
+    </Typography>
   );
 }

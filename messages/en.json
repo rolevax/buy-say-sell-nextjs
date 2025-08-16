@@ -59,9 +59,18 @@
       "title": "About Buy Say Sell",
       "what": {
         "title": "What",
-        "p1": "Buy Say Sell is an altered social media where only the owner of a story can comment to it.",
+        "p1": "Buy Say Sell is an altered social media. Here stories can be traded, and only the owner of a story can add content to it.",
         "end": "end"
       },
+      "motivation": {
+        "title": "Motivation",
+        "p1": "People bla bla bla too much on Internet. Their words are trash. So build a place where people always say something interesting. By interesting we mean words that ignite people to comments to it, and those comments contribute more value to the story. People really want to express their idea even it requires money. ",
+        "$": ""
+      },
+      "$": ""
+    },
+    "contract": {
+      "title": "Contract and Source",
       "end": "end"
     },
     "contributers": {

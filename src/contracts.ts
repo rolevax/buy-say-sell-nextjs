@@ -4,6 +4,10 @@ import { config } from "./wagmi";
 
 export function getContractAddress() {
   const chain = getChainId(config);
+  return getContractAddressOf(chain);
+}
+
+export function getContractAddressOf(chain: ReturnType<typeof getChainId>) {
   if (chain == sepolia.id) {
     return "0xEc17680FC384aA29061994F19d66Ee0860f93E72";
   }
