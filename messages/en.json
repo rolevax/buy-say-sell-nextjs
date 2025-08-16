@@ -4,7 +4,7 @@
     "pleaseConnect": "Please connect your wallet to use."
   },
   "AppBar": {
-    "about": "About",
+    "docs": "Docs",
     "darkMode": "Toggle dark mode"
   },
   "BriefIntro": {
@@ -51,6 +51,12 @@
     "gasPrice": "Gas price: {price} gwei",
     "value": "Value: {price} ETH",
     "confirmTx": "Confirming transaction: {hash}",
+    "end": "end"
+  },
+  "Docs": {
+    "title": "Docs",
+    "about": "About Buy Say Sell",
+    "contributers": "Contributers",
     "end": "end"
   },
   "End": {}

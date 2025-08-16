@@ -1,4 +1,4 @@
-import { Info, Lyrics } from "@mui/icons-material";
+import { Article, Lyrics } from "@mui/icons-material";
 import {
   AppBar,
   IconButton,
@@ -6,10 +6,10 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import ModeSwitch from "./ModeSwitch";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import LanguageButton from "./LanguageButton";
 import { useTranslations } from "next-intl";
+import LanguageButton from "./LanguageButton";
+import ModeSwitch from "./ModeSwitch";
 
 export default function CommonAppBar(props: { title: string }) {
   const t = useTranslations("AppBar");
@@ -30,9 +30,9 @@ export default function CommonAppBar(props: { title: string }) {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           {props.title}
         </Typography>
-        <Tooltip title={t("about")}>
-          <IconButton color="inherit" href="/about">
-            <Info />
+        <Tooltip title={t("docs")}>
+          <IconButton color="inherit" href="/docs">
+            <Article />
           </IconButton>
         </Tooltip>
         <ModeSwitch />

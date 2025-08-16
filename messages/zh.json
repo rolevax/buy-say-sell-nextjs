@@ -4,7 +4,7 @@
     "pleaseConnect": "请连接钱包以使用。"
   },
   "AppBar": {
-    "about": "关于",
+    "docs": "文档",
     "darkMode": "切换夜间模式"
   },
   "BriefIntro": {
@@ -51,6 +51,12 @@
     "gasPrice": "Gas 单价：{price} gwei",
     "value": "支出：{price} ETH",
     "confirmTx": "正在确认交易：{hash}",
+    "end": "end"
+  },
+  "Docs": {
+    "title": "文档",
+    "about": "关于买说卖",
+    "contributers": "贡献者",
     "end": "end"
   },
   "End": {}
