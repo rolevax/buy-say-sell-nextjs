@@ -60,14 +60,27 @@
       "what": {
         "title": "什么鬼",
         "p1": "买说卖是一个另类社交平台。在这里，故事可以买卖，同时只有故事的主人能为故事添加内容。",
-        "end": "end"
+        "$": "$"
       },
       "motivation": {
         "title": "动机",
         "p1": "People bla bla bla too much on Internet. Their words are trash. So build a place where people always say something interesting. By interesting we mean words that ignite people to comments to it, and those comments contribute more value to the story. People really want to express their idea even it requires money. ",
+        "p2": "",
         "$": ""
       },
-      "end": "end"
+      "tech": {
+        "title": "技术概览",
+        "p1": "...",
+        "p2": "...",
+        "$": "$"
+      },
+      "pricing": {
+        "title": "定价",
+        "p1": "",
+        "p2": "This application is developed mostly for experimental purpose. ",
+        "$": "$"
+      },
+      "$": "$"
     },
     "contract": {
       "title": "合约与源码",

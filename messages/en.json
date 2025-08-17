@@ -60,12 +60,25 @@
       "what": {
         "title": "What",
         "p1": "Buy Say Sell is an altered social media. Here stories can be traded, and only the owner of a story can add content to it.",
-        "end": "end"
+        "$": "$"
       },
       "motivation": {
         "title": "Motivation",
-        "p1": "People bla bla bla too much on Internet. Their words are trash. So build a place where people always say something interesting. By interesting we mean words that ignite people to comments to it, and those comments contribute more value to the story. People really want to express their idea even it requires money. ",
+        "p1": "Human creates too much trash infomation on the Internet. A place for only valueable information is desired. By valueable we mean the words worth money. People pays to say, and says to make people pay. ",
+        "p2": "The reason to pay for saying can be either cooperative or competitive. One can make an interesting story beginning to attract lovers to continue the story, or make a debative story beginning to attract haters to express a different opinion. In both cases, the buyer needs to thoughtfully arrange their words to keep the story interesting so the sotry can be sold. By this mechanism, those boring garbage information makers are kept away from this social media. ",
         "$": ""
+      },
+      "tech": {
+        "title": "Technical Overview",
+        "p1": "Buy Say Sell is a decenteralized application based on Ethereum. The service is purely on-chain. The frontend webpage is also open-sourced and anyone can deploy it. ",
+        "p2": "The stories are standard ERC-721 NFT's, so they can also be traded outside this platform, like crypto wallets and NFT markets. ",
+        "$": "$"
+      },
+      "pricing": {
+        "title": "Pricing",
+        "p1": "Currently Buy Say Sell is gas-only. Gas are paid to network validators (miners), and the developers are totally volunteering. ",
+        "p2": "This application is developed mostly for experimental purpose. ",
+        "$": "$"
       },
       "$": ""
     },
