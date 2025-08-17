@@ -84,7 +84,11 @@
     },
     "contract": {
       "title": "合约与源码",
-      "end": "end"
+      "sourceText": "买说卖由两部分组成：合约和网页。其源码可在这里查看：",
+      "contractText": "各网络的合约地址为：",
+      "contract": "合约",
+      "webpage": "网页",
+      "$": "$"
     },
     "contributers": {
       "title": "贡献者",

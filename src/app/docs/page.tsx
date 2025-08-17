@@ -104,23 +104,30 @@ function ContractContent() {
     <Stack direction="column">
       <MyH1>{t("contract.title")}</MyH1>
       <MyBody>
-        Buy Say Sell consists of only two parts: the contract and the web page.
-        Their source can be checked at:
+        {t("contract.sourceText")}
         <ul>
           <li>
-            <Link href={""} target="_blank" rel="noopener">
-              Contract
+            <Link
+              href={"https://github.com/rolevax/buy-say-sell"}
+              target="_blank"
+              rel="noopener"
+            >
+              {t("contract.contract")}
             </Link>
           </li>
           <li>
-            <Link href={""} target="_blank" rel="noopener">
-              Web Page
+            <Link
+              href={"https://github.com/rolevax/buy-say-sell-nextjs"}
+              target="_blank"
+              rel="noopener"
+            >
+              {t("contract.webpage")}
             </Link>
           </li>
         </ul>
       </MyBody>
       <MyBody>
-        The contract addresses for each networks are:
+        {t("contract.contractText")}
         <ul>
           <li>
             Sepolia:{" "}
