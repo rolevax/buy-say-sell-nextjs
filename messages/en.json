@@ -70,8 +70,8 @@
       },
       "tech": {
         "title": "Technical Overview",
-        "p1": "Buy Say Sell is a decenteralized application based on Ethereum. The service is purely on-chain. The frontend webpage is also open-sourced and anyone can deploy it. ",
-        "p2": "The stories are standard ERC-721 NFT's, so they can also be traded outside this platform, like crypto wallets and NFT markets. ",
+        "p1": "Buy Say Sell is a decenteralized application based on Ethereum. The service is purely on-chain. The frontend webpage is also open-sourced and anyone can deploy it. Therefore, Buy Say Sell will never end its service, and your stories are truly yours. ",
+        "p2": "The stories are standard ERC-721 NFT's, so they can also be traded outside this platform, like Web 3 wallets and NFT markets. ",
         "$": "$"
       },
       "pricing": {
