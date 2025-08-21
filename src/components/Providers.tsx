@@ -1,9 +1,9 @@
-"use client"; // for import anvil
+"use client";
 
 import theme from "@/theme";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, useColorScheme } from "@mui/material/styles";
 import {
   darkTheme,
   lightTheme,
@@ -13,6 +13,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type React from "react";
 import { WagmiProvider } from "wagmi";
 
+import { LocaleCode } from "@/i18n/config";
+import { useMediaQuery } from "@mui/material";
+import { useLocale } from "next-intl";
 import { sepolia } from "wagmi/chains";
 import { config } from "../wagmi";
 
@@ -26,18 +29,27 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <CssBaseline />
         <WagmiProvider config={config}>
           <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider
-              initialChain={sepolia}
-              theme={{
-                lightMode: lightTheme(),
-                darkMode: darkTheme(),
-              }}
-            >
-              {children}
-            </RainbowKitProvider>
+            <Providers2>{children}</Providers2>
           </QueryClientProvider>
         </WagmiProvider>
       </ThemeProvider>
     </AppRouterCacheProvider>
+  );
+}
+
+export function Providers2({ children }: { children: React.ReactNode }) {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const { mode } = useColorScheme();
+  const isDark = mode == "dark" || (mode == "system" && prefersDarkMode);
+  const locale = useLocale() as LocaleCode;
+
+  return (
+    <RainbowKitProvider
+      initialChain={sepolia}
+      theme={isDark ? darkTheme() : lightTheme()}
+      locale={locale}
+    >
+      {children}
+    </RainbowKitProvider>
   );
 }

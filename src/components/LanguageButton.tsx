@@ -17,7 +17,7 @@ import { useState, useTransition } from "react";
 export default function LanguageButton() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [isPending, startTransition] = useTransition();
-  const locale = useLocale();
+  const locale = useLocale() as LocaleCode;
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
