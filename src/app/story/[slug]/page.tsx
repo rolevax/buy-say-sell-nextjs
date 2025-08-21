@@ -29,6 +29,7 @@ import {
 import { useFormatter, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { Key, ReactNode, useState } from "react";
+import { MetaMaskAvatar } from "react-metamask-avatar";
 import { formatEther } from "viem";
 import { useAccount, useReadContract } from "wagmi";
 
@@ -71,23 +72,17 @@ function StoryBody(props: { storyID: string }) {
 
   let storyEvents = story.comments.map((comment, i) => {
     if (comment.isLog) {
-      let children;
+      let child: ReactNode;
       if (comment.content == "buy") {
-        children = [
-          <ShoppingCart />,
-          <Typography color="secondary">{t("buyLog")}</Typography>,
-        ];
+        child = <LogRow icon={<ShoppingCart />} text={t("buyLog")} />;
       } else if (comment.price == 0n) {
-        children = [
-          <RemoveShoppingCart />,
-          <Typography color="secondary">{t("unlistLog")}</Typography>,
-        ];
+        child = (
+          <LogRow icon={<RemoveShoppingCart key={i} />} text={t("unlistLog")} />
+        );
       } else {
-        children = [
-          <Discount />,
-          <Typography color="secondary">{t("priceLog")}</Typography>,
-        ];
+        child = <LogRow icon={<Discount key={i} />} text={t("priceLog")} />;
       }
+
       return (
         <EventRow
           key={i}
@@ -96,7 +91,7 @@ function StoryBody(props: { storyID: string }) {
           price={comment.price}
         >
           <Stack direction="row" spacing={1}>
-            {children}
+            {child}
           </Stack>
         </EventRow>
       );
@@ -173,8 +168,16 @@ function StoryBody(props: { storyID: string }) {
   );
 }
 
+function LogRow(props: { icon: ReactNode; text: string }) {
+  return (
+    <Stack direction="row" spacing={1}>
+      {props.icon}
+      <Typography color="secondary">{props.text}</Typography>
+    </Stack>
+  );
+}
+
 function EventRow(props: {
-  key: Key;
   address: `0x${string}`;
   timestamp: bigint;
   price: bigint;
@@ -184,7 +187,6 @@ function EventRow(props: {
 
   return (
     <TableRow
-      key={props.key}
       sx={{
         "td, th": { border: 0 },
       }}
@@ -194,7 +196,7 @@ function EventRow(props: {
         component="th"
         scope="row"
       >
-        <Avatar>N</Avatar>
+        <MetaMaskAvatar address={props.address} size={48} />
       </TableCell>
       <TableCell>
         <Card sx={{ pt: 1, pb: 1, pl: 2, pr: 2 }}>
