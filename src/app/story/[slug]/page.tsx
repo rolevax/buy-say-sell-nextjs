@@ -1,5 +1,6 @@
 "use client";
 
+import AddressLink from "@/components/AddressLink";
 import CommentInput from "@/components/CommentInput";
 import CommonAppBar from "@/components/CommonAppBar";
 import Copyright from "@/components/Copyright";
@@ -143,10 +144,12 @@ function StoryBody(props: { storyID: string }) {
                 <Typography>{t("owner")}</Typography>
               </TableCell>
               <TableCell>
-                <Stack direction="row" spacing={1}>
-                  <MetaMaskAvatar address={story.owner} />
-                  <Typography>{story.owner}</Typography>
-                </Stack>
+                <AddressLink address={story.owner}>
+                  <Stack direction="row" spacing={1}>
+                    <MetaMaskAvatar address={story.owner} />
+                    <Typography>{story.owner}</Typography>
+                  </Stack>
+                </AddressLink>
               </TableCell>
             </TableRow>
             <TableRow
@@ -211,7 +214,14 @@ function EventRow(props: {
             divider={<Divider orientation="vertical" flexItem />}
             sx={{ mb: 1 }}
           >
-            <Tooltip title={props.address} arrow>
+            <Tooltip
+              title={
+                <AddressLink address={props.address}>
+                  {props.address}
+                </AddressLink>
+              }
+              arrow
+            >
               <Typography variant="caption">
                 {shortAddr(props.address)}
               </Typography>
