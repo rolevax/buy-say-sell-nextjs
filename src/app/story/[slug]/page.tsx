@@ -140,20 +140,27 @@ function StoryBody(props: { storyID: string }) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {t("owner")}
+                <Typography>{t("owner")}</Typography>
               </TableCell>
-              <TableCell>{story.owner}</TableCell>
+              <TableCell>
+                <Stack direction="row" spacing={1}>
+                  <MetaMaskAvatar address={story.owner} />
+                  <Typography>{story.owner}</Typography>
+                </Stack>
+              </TableCell>
             </TableRow>
             <TableRow
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {t("listing")}
+                <Typography>{t("listing")}</Typography>
               </TableCell>
               <TableCell>
-                {story.sellPrice > 0
-                  ? t("sellingAt", { price: formatEther(story.sellPrice) })
-                  : t("notListed")}
+                <Typography>
+                  {story.sellPrice > 0
+                    ? t("sellingAt", { price: formatEther(story.sellPrice) })
+                    : t("notListed")}
+                </Typography>
               </TableCell>
             </TableRow>
           </TableBody>

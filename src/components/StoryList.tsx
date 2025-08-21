@@ -9,6 +9,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { MetaMaskAvatar } from "react-metamask-avatar";
 import { useReadContract } from "wagmi";
 
 export default function StoryList() {
@@ -35,7 +36,7 @@ export default function StoryList() {
     <ListItem disablePadding key={story.index}>
       <ListItemButton href={"/story/" + story.index}>
         <ListItemIcon>
-          <Inbox />
+          <MetaMaskAvatar address={story.owner} />
         </ListItemIcon>
         <ListItemText primary={story.comments[0].content} />
       </ListItemButton>
