@@ -11,7 +11,6 @@ import {
   ShoppingCart,
 } from "@mui/icons-material";
 import {
-  Avatar,
   Box,
   Card,
   Container,
@@ -28,7 +27,7 @@ import {
 } from "@mui/material";
 import { useFormatter, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { Key, ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
 import { formatEther } from "viem";
 import { useAccount, useReadContract } from "wagmi";
@@ -74,13 +73,16 @@ function StoryBody(props: { storyID: string }) {
     if (comment.isLog) {
       let child: ReactNode;
       if (comment.content == "buy") {
-        child = <LogRow icon={<ShoppingCart />} text={t("buyLog")} />;
+        child = <LogContent icon={<ShoppingCart />} text={t("buyLog")} />;
       } else if (comment.price == 0n) {
         child = (
-          <LogRow icon={<RemoveShoppingCart key={i} />} text={t("unlistLog")} />
+          <LogContent
+            icon={<RemoveShoppingCart key={i} />}
+            text={t("unlistLog")}
+          />
         );
       } else {
-        child = <LogRow icon={<Discount key={i} />} text={t("priceLog")} />;
+        child = <LogContent icon={<Discount key={i} />} text={t("priceLog")} />;
       }
 
       return (
@@ -90,9 +92,7 @@ function StoryBody(props: { storyID: string }) {
           timestamp={comment.timestamp}
           price={comment.price}
         >
-          <Stack direction="row" spacing={1}>
-            {child}
-          </Stack>
+          {child}
         </EventRow>
       );
     }
@@ -168,7 +168,7 @@ function StoryBody(props: { storyID: string }) {
   );
 }
 
-function LogRow(props: { icon: ReactNode; text: string }) {
+function LogContent(props: { icon: ReactNode; text: string }) {
   return (
     <Stack direction="row" spacing={1}>
       {props.icon}
@@ -183,8 +183,6 @@ function EventRow(props: {
   price: bigint;
   children: ReactNode;
 }) {
-  const format = useFormatter();
-
   return (
     <TableRow
       sx={{
