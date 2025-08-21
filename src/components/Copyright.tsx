@@ -1,11 +1,9 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
-import MuiLink from "@mui/material/Link";
 import { Box } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 export default function Copyright() {
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" sx={{ m: 2 }}>
       <Box minHeight={200} />
       <Typography
         variant="body2"
@@ -14,10 +12,7 @@ export default function Copyright() {
           color: "text.secondary",
         }}
       >
-        {"Copyright © "}
-        <MuiLink color="inherit" href="https://mui.com/">
-          Your Website
-        </MuiLink>{" "}
+        {"Copyright © rolevax "}
         {new Date().getFullYear()}.
       </Typography>
     </Box>
