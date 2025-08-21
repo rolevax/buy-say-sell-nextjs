@@ -1,19 +1,20 @@
-import { Article, Chat, Lyrics } from "@mui/icons-material";
+import { Article } from "@mui/icons-material";
 import {
   AppBar,
+  Box,
   IconButton,
-  SvgIcon,
   Toolbar,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useTranslations } from "next-intl";
+import { ReactNode } from "react";
+import BuySaySellIcon from "./AppIcon";
 import LanguageButton from "./LanguageButton";
 import ModeSwitch from "./ModeSwitch";
-import BuySaySellIcon from "./AppIcon";
 
-export default function CommonAppBar(props: { title: string }) {
+export default function CommonAppBar(props: { title: ReactNode }) {
   const t = useTranslations("AppBar");
 
   return (
@@ -29,9 +30,11 @@ export default function CommonAppBar(props: { title: string }) {
         >
           <BuySaySellIcon />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {props.title}
-        </Typography>
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div">
+            {props.title}
+          </Typography>
+        </Box>
         <Tooltip title={t("docs")}>
           <IconButton color="inherit" href="/docs">
             <Article />

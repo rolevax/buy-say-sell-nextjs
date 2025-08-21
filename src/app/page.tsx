@@ -2,6 +2,7 @@ import BriefIntro from "@/components/BriefIntro";
 import CommonAppBar from "@/components/CommonAppBar";
 import Copyright from "@/components/Copyright";
 import HomeClient from "@/components/HomeClient";
+import { Badge } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { useTranslations } from "next-intl";
@@ -12,7 +13,7 @@ export default function Home() {
   return (
     <Container maxWidth="lg">
       <Box sx={{ width: "100%", flexGrow: 1 }}>
-        <CommonAppBar title={t("name")} />
+        <CommonAppBar title={<Badge badgeContent="Beta">{t("name")}</Badge>} />
         <HomeBody />
       </Box>
     </Container>
