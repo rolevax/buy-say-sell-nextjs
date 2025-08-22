@@ -30,45 +30,7 @@ export default function StoryEventTable({
   const t = useTranslations("Story");
 
   let storyEvents = story.comments.map((comment, i) => {
-    if (comment.isLog) {
-      let child: ReactNode;
-      if (comment.content == "buy") {
-        child = <LogContent icon={<ShoppingCart />} text={t("buyLog")} />;
-      } else if (comment.price == 0n) {
-        child = (
-          <LogContent
-            icon={<RemoveShoppingCart key={i} />}
-            text={t("unlistLog")}
-          />
-        );
-      } else {
-        child = <LogContent icon={<Discount key={i} />} text={t("priceLog")} />;
-      }
-
-      return (
-        <EventRow
-          key={i}
-          address={comment.owner}
-          timestamp={comment.timestamp}
-          price={comment.price}
-        >
-          {child}
-        </EventRow>
-      );
-    }
-
-    return (
-      <EventRow
-        key={i}
-        address={comment.owner}
-        timestamp={comment.timestamp}
-        price={comment.price}
-      >
-        <Typography variant="body1" color="textPrimary">
-          {comment.content}
-        </Typography>
-      </EventRow>
-    );
+    return <EventRow key={i} comment={comment} />;
   });
 
   return (
@@ -89,11 +51,14 @@ function LogContent(props: { icon: ReactNode; text: string }) {
   );
 }
 
-function EventRow(props: {
-  address: `0x${string}`;
-  timestamp: bigint;
-  price: bigint;
-  children: ReactNode;
+function EventRow({
+  comment,
+}: {
+  comment: ReadContractReturnType<
+    typeof contractAbi,
+    "getStory",
+    [0n]
+  >["comments"][0];
 }) {
   return (
     <TableRow
@@ -106,7 +71,7 @@ function EventRow(props: {
         component="th"
         scope="row"
       >
-        <MetaMaskAvatar address={props.address} size={48} />
+        <MetaMaskAvatar address={comment.owner} size={48} />
       </TableCell>
       <TableCell>
         <Card sx={{ pt: 1, pb: 1, pl: 2, pr: 2 }}>
@@ -118,25 +83,52 @@ function EventRow(props: {
           >
             <Tooltip
               title={
-                <AddressLink address={props.address}>
-                  {props.address}
+                <AddressLink address={comment.owner}>
+                  {comment.owner}
                 </AddressLink>
               }
               arrow
             >
               <Typography variant="caption">
-                {shortAddr(props.address)}
+                {shortAddr(comment.owner)}
               </Typography>
             </Tooltip>
             <Typography variant="caption" color="secondary">
-              {formatEther(props.price)} ETH
+              {formatEther(comment.price)} ETH
             </Typography>
-            <TimeText timestamp={props.timestamp} />
+            <TimeText timestamp={comment.timestamp} />
           </Stack>
-          {props.children}
+          <EventRowContent comment={comment} />
         </Card>
       </TableCell>
     </TableRow>
+  );
+}
+
+function EventRowContent({
+  comment,
+}: {
+  comment: ReadContractReturnType<
+    typeof contractAbi,
+    "getStory",
+    [0n]
+  >["comments"][0];
+}) {
+  const t = useTranslations("Story");
+  if (comment.isLog) {
+    if (comment.content == "buy") {
+      return <LogContent icon={<ShoppingCart />} text={t("buyLog")} />;
+    }
+    if (comment.price == 0n) {
+      return <LogContent icon={<RemoveShoppingCart />} text={t("unlistLog")} />;
+    }
+    return <LogContent icon={<Discount />} text={t("priceLog")} />;
+  }
+
+  return (
+    <Typography variant="body1" color="textPrimary">
+      {comment.content}
+    </Typography>
   );
 }
 
