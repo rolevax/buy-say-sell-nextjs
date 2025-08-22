@@ -9,9 +9,9 @@ import StoryList from "./StoryList";
 
 export default function HomeClient() {
   const t = useTranslations("Home");
-  const { address } = useAccount();
+  const { isConnected } = useAccount();
 
-  if (!address) {
+  if (!isConnected) {
     return <PleaseConnect />;
   }
 
