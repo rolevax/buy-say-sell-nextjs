@@ -8,6 +8,7 @@ import {
 import {
   Card,
   Divider,
+  Skeleton,
   Stack,
   Table,
   TableBody,
@@ -22,16 +23,15 @@ import { ReactNode } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
 import { formatEther, ReadContractReturnType } from "viem";
 
-export default function StoryEventTable({
-  story,
-}: {
-  story: ReadContractReturnType<typeof contractAbi, "getStory", [0n]>;
-}) {
+type StoryType = ReadContractReturnType<typeof contractAbi, "getStory", [0n]>;
+type CommentType = StoryType["comments"][0];
+
+export default function StoryEventTable({ story }: { story?: StoryType }) {
   const t = useTranslations("Story");
 
-  let storyEvents = story.comments.map((comment, i) => {
-    return <EventRow key={i} comment={comment} />;
-  });
+  let storyEvents = story
+    ? story.comments.map((comment, i) => <EventRow key={i} comment={comment} />)
+    : Array.from(Array(3).keys()).map((i) => <EventRow key={i} />);
 
   return (
     <TableContainer>
@@ -51,15 +51,7 @@ function LogContent(props: { icon: ReactNode; text: string }) {
   );
 }
 
-function EventRow({
-  comment,
-}: {
-  comment: ReadContractReturnType<
-    typeof contractAbi,
-    "getStory",
-    [0n]
-  >["comments"][0];
-}) {
+function EventRow({ comment }: { comment?: CommentType }) {
   return (
     <TableRow
       sx={{
@@ -71,7 +63,11 @@ function EventRow({
         component="th"
         scope="row"
       >
-        <MetaMaskAvatar address={comment.owner} size={48} />
+        {comment ? (
+          <MetaMaskAvatar address={comment.owner} size={48} />
+        ) : (
+          <Skeleton variant="circular" width={48} height={48} />
+        )}
       </TableCell>
       <TableCell>
         <Card sx={{ pt: 1, pb: 1, pl: 2, pr: 2 }}>
@@ -81,22 +77,34 @@ function EventRow({
             divider={<Divider orientation="vertical" flexItem />}
             sx={{ mb: 1 }}
           >
-            <Tooltip
-              title={
-                <AddressLink address={comment.owner}>
-                  {comment.owner}
-                </AddressLink>
-              }
-              arrow
-            >
+            {comment ? (
+              <Tooltip
+                title={
+                  <AddressLink address={comment.owner}>
+                    {comment.owner}
+                  </AddressLink>
+                }
+                arrow
+              >
+                <Typography variant="caption">
+                  {shortAddr(comment.owner)}
+                </Typography>
+              </Tooltip>
+            ) : (
               <Typography variant="caption">
-                {shortAddr(comment.owner)}
+                <Skeleton variant="text" width={60} />
               </Typography>
-            </Tooltip>
-            <Typography variant="caption" color="secondary">
-              {formatEther(comment.price)} ETH
-            </Typography>
-            <TimeText timestamp={comment.timestamp} />
+            )}
+            {comment ? (
+              <Typography variant="caption" color="secondary">
+                {formatEther(comment.price)} ETH
+              </Typography>
+            ) : (
+              <Typography variant="caption">
+                <Skeleton variant="text" width={60} />
+              </Typography>
+            )}
+            <TimeText timestamp={comment?.timestamp} />
           </Stack>
           <EventRowContent comment={comment} />
         </Card>
@@ -105,23 +113,26 @@ function EventRow({
   );
 }
 
-function EventRowContent({
-  comment,
-}: {
-  comment: ReadContractReturnType<
-    typeof contractAbi,
-    "getStory",
-    [0n]
-  >["comments"][0];
-}) {
+function EventRowContent({ comment }: { comment?: CommentType }) {
+  if (!comment) {
+    return (
+      <Typography variant="body1" color="textPrimary">
+        <Skeleton variant="text" />
+      </Typography>
+    );
+  }
+
   const t = useTranslations("Story");
+
   if (comment.isLog) {
     if (comment.content == "buy") {
       return <LogContent icon={<ShoppingCart />} text={t("buyLog")} />;
     }
+
     if (comment.price == 0n) {
       return <LogContent icon={<RemoveShoppingCart />} text={t("unlistLog")} />;
     }
+
     return <LogContent icon={<Discount />} text={t("priceLog")} />;
   }
 
@@ -132,19 +143,23 @@ function EventRowContent({
   );
 }
 
-function TimeText(props: { timestamp: bigint }) {
+function TimeText({ timestamp }: { timestamp?: bigint }) {
   const format = useFormatter();
 
   return (
     <Typography variant="caption" color="secondary">
-      {format.dateTime(new Date(Number(props.timestamp) * 1000), {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      })}
+      {timestamp ? (
+        format.dateTime(new Date(Number(timestamp) * 1000), {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      ) : (
+        <Skeleton variant="text" width={160} />
+      )}
     </Typography>
   );
 }

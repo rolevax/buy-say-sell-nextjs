@@ -53,10 +53,6 @@ function StoryBody(props: { storyID: string }) {
     args: [BigInt(+props.storyID)],
   });
 
-  if (isPending) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
     return <div>Error: {error.shortMessage || error.message}</div>;
   }

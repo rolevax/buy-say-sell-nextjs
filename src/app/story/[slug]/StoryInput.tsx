@@ -1,6 +1,7 @@
 import CommentInput from "@/components/CommentInput";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi, getContractAddress } from "@/contracts";
+import { Skeleton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ReadContractReturnType } from "viem";
@@ -9,11 +10,15 @@ import { useAccount } from "wagmi";
 export default function StoryInput({
   story,
 }: {
-  story: ReadContractReturnType<typeof contractAbi, "getStory", [0n]>;
+  story?: ReadContractReturnType<typeof contractAbi, "getStory", [0n]>;
 }) {
   const { address, isConnected } = useAccount();
   if (!isConnected) {
     return <PleaseConnect />;
+  }
+
+  if (!story) {
+    return <Skeleton variant="rectangular" height={200} />;
   }
 
   if (story.owner == address) {
