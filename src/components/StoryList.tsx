@@ -1,6 +1,7 @@
 "use client";
 
-import { contractAbi, getContractAddress } from "@/contracts";
+import { contractAbi } from "@/contract_abi";
+import { getContractAddress } from "@/contracts";
 import { Inbox } from "@mui/icons-material";
 import {
   List,

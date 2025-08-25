@@ -1,6 +1,7 @@
 import CommentInput from "@/components/CommentInput";
 import PleaseConnect from "@/components/PleaseConnect";
-import { contractAbi, getContractAddress } from "@/contracts";
+import { contractAbi } from "@/contract_abi";
+import { getContractAddress } from "@/contracts";
 import { Skeleton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";

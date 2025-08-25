@@ -1,5 +1,5 @@
 import AddressLink from "@/components/AddressLink";
-import { contractAbi } from "@/contracts";
+import { contractAbi } from "@/contract_abi";
 import {
   Paper,
   Skeleton,

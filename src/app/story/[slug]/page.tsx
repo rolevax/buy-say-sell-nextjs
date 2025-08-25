@@ -3,7 +3,7 @@
 import AddressLink from "@/components/AddressLink";
 import CommonAppBar from "@/components/CommonAppBar";
 import Copyright from "@/components/Copyright";
-import { contractAbi, getContractAddress } from "@/contracts";
+import { getContractAddress } from "@/contracts";
 import {
   Box,
   Container,
@@ -24,6 +24,7 @@ import { useReadContract } from "wagmi";
 import StoryEventTable from "./StoryEventTable";
 import StoryInput from "./StoryInput";
 import StoryStatus from "./StoryStatus";
+import { contractAbi } from "@/contract_abi";
 
 export default function Story() {
   const t = useTranslations("Story");
