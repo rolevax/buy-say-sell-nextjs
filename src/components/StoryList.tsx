@@ -8,13 +8,19 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Pagination,
   Skeleton,
+  Stack,
 } from "@mui/material";
+import { ReactNode, useState } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
 import { ReadContractReturnType } from "viem";
 import { useReadContract } from "wagmi";
 
 export default function StoryList() {
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+
   const {
     data: stories,
     error,
@@ -23,25 +29,35 @@ export default function StoryList() {
     address: getContractAddress(),
     abi: contractAbi,
     functionName: "getStories",
-    args: [0n, 10n],
+    args: [BigInt((page - 1) * pageSize), BigInt(pageSize)],
   });
-
-  if (isPending) {
-    const items = Array.from(Array(10).keys()).map((i) => (
-      <StoryListItem key={i} />
-    ));
-    return <List>{items}</List>;
-  }
 
   if (error) {
     return <div>Error: {error.shortMessage || error.message}</div>;
   }
 
-  let storyItems = (stories || []).map((story) => (
-    <StoryListItem key={story.index} story={story} />
-  ));
+  let items: ReactNode[];
 
-  return <List>{storyItems}</List>;
+  if (isPending) {
+    items = Array.from(Array(pageSize).keys()).map((i) => (
+      <StoryListItem key={i} />
+    ));
+  } else {
+    items = (stories || []).map((story) => (
+      <StoryListItem key={story.index} story={story} />
+    ));
+  }
+
+  return (
+    <Stack spacing={2} alignItems="center">
+      <List sx={{ width: "100%" }}>{items}</List>
+      <Pagination
+        count={10}
+        page={page}
+        onChange={(event, value) => setPage(value)}
+      />
+    </Stack>
+  );
 }
 
 function StoryListItem({
