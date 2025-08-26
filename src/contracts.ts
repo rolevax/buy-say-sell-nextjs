@@ -1,6 +1,14 @@
-import { getChainId } from "@wagmi/core";
+import { getChainId, ReadContractReturnType } from "@wagmi/core";
 import { anvil, sepolia } from "viem/chains";
 import { config } from "./wagmi";
+import { contractAbi } from "./contract_abi";
+
+export type StoryType = ReadContractReturnType<
+  typeof contractAbi,
+  "getStory",
+  [0n]
+>;
+export type CommentType = StoryType["comments"][0];
 
 export function getContractAddress() {
   const chain = getChainId(config);

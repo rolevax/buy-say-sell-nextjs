@@ -2,7 +2,6 @@
 
 import { contractAbi } from "@/contract_abi";
 import { getContractAddress } from "@/contracts";
-import { Inbox } from "@mui/icons-material";
 import {
   List,
   ListItem,
@@ -13,7 +12,7 @@ import {
 } from "@mui/material";
 import { MetaMaskAvatar } from "react-metamask-avatar";
 import { ReadContractReturnType } from "viem";
-import { useReadContract, UseReadContractReturnType } from "wagmi";
+import { useReadContract } from "wagmi";
 
 export default function StoryList() {
   const {

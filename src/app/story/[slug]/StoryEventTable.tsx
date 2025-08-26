@@ -1,5 +1,5 @@
 import AddressLink from "@/components/AddressLink";
-import { contractAbi } from "@/contract_abi";
+import { CommentType, StoryType } from "@/contracts";
 import {
   Discount,
   RemoveShoppingCart,
@@ -21,10 +21,7 @@ import {
 import { useFormatter, useTranslations } from "next-intl";
 import { ReactNode } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
-import { formatEther, ReadContractReturnType } from "viem";
-
-type StoryType = ReadContractReturnType<typeof contractAbi, "getStory", [0n]>;
-type CommentType = StoryType["comments"][0];
+import { formatEther } from "viem";
 
 export default function StoryEventTable({ story }: { story?: StoryType }) {
   const t = useTranslations("Story");

@@ -1,5 +1,5 @@
 import AddressLink from "@/components/AddressLink";
-import { contractAbi } from "@/contract_abi";
+import { StoryType } from "@/contracts";
 import {
   Paper,
   Skeleton,
@@ -13,13 +13,9 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { MetaMaskAvatar } from "react-metamask-avatar";
-import { formatEther, ReadContractReturnType } from "viem";
+import { formatEther } from "viem";
 
-export default function StoryStatus({
-  story,
-}: {
-  story?: ReadContractReturnType<typeof contractAbi, "getStory", [0n]>;
-}) {
+export default function StoryStatus({ story }: { story?: StoryType }) {
   const t = useTranslations("Story");
 
   return (

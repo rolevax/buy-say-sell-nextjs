@@ -1,18 +1,13 @@
 import CommentInput from "@/components/CommentInput";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi } from "@/contract_abi";
-import { getContractAddress } from "@/contracts";
+import { getContractAddress, StoryType } from "@/contracts";
 import { Skeleton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { ReadContractReturnType } from "viem";
 import { useAccount } from "wagmi";
 
-export default function StoryInput({
-  story,
-}: {
-  story?: ReadContractReturnType<typeof contractAbi, "getStory", [0n]>;
-}) {
+export default function StoryInput({ story }: { story?: StoryType }) {
   const { address, isConnected } = useAccount();
   if (!isConnected) {
     return <PleaseConnect />;
