@@ -12,6 +12,7 @@ import {
   Skeleton,
   Stack,
 } from "@mui/material";
+import { pages } from "next/dist/build/templates/app-page";
 import { ReactNode, useState } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
 import { ReadContractReturnType } from "viem";
@@ -21,11 +22,7 @@ export default function StoryList() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
-  const {
-    data: stories,
-    error,
-    isPending,
-  } = useReadContract({
+  const { data, error, isPending } = useReadContract({
     address: getContractAddress(),
     abi: contractAbi,
     functionName: "getStories",
@@ -37,22 +34,25 @@ export default function StoryList() {
   }
 
   let items: ReactNode[];
-
+  let count = 1;
   if (isPending) {
     items = Array.from(Array(pageSize).keys()).map((i) => (
       <StoryListItem key={i} />
     ));
   } else {
-    items = (stories || []).map((story) => (
+    const [stories, total] = data;
+    items = stories.map((story) => (
       <StoryListItem key={story.index} story={story} />
     ));
+    console.log("total size " + total);
+    count = Math.ceil(Number(total) / pageSize);
   }
 
   return (
     <Stack spacing={2} alignItems="center">
       <List sx={{ width: "100%" }}>{items}</List>
       <Pagination
-        count={10}
+        count={count}
         page={page}
         onChange={(event, value) => setPage(value)}
       />

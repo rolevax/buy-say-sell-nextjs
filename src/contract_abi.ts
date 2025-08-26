@@ -71,7 +71,7 @@ export const contractAbi = [
     ],
     outputs: [
       {
-        name: "",
+        name: "data",
         type: "tuple[]",
         internalType: "struct BuySaySell.Story[]",
         components: [
@@ -92,6 +92,7 @@ export const contractAbi = [
           },
         ],
       },
+      { name: "total", type: "uint256", internalType: "uint256" },
     ],
     stateMutability: "view",
   },
