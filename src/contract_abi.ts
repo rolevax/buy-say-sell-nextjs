@@ -65,7 +65,10 @@ export const contractAbi = [
   {
     type: "function",
     name: "getStories",
-    inputs: [],
+    inputs: [
+      { name: "offset", type: "uint256", internalType: "uint256" },
+      { name: "length", type: "uint256", internalType: "uint256" },
+    ],
     outputs: [
       {
         name: "",

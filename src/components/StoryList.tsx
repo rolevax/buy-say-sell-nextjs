@@ -24,7 +24,7 @@ export default function StoryList() {
     address: getContractAddress(),
     abi: contractAbi,
     functionName: "getStories",
-    args: [],
+    args: [0n, 10n],
   });
 
   if (isPending) {
@@ -48,7 +48,7 @@ export default function StoryList() {
 function StoryListItem({
   story,
 }: {
-  story?: ReadContractReturnType<typeof contractAbi, "getStories", []>[0];
+  story?: ReadContractReturnType<typeof contractAbi, "getStory", [0n]>;
 }) {
   return (
     <ListItem disablePadding>
