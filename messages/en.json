@@ -17,7 +17,9 @@
     "sellLong": "List your story to the market. Your words value the story."
   },
   "Home": {
+    "stories": "Stories",
     "market": "Story Market",
+    "my": "My Stories",
     "createStory": "Create New Story",
     "end": "end"
   },

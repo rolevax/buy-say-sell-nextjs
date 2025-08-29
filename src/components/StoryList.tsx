@@ -1,7 +1,7 @@
 "use client";
 
 import { contractAbi } from "@/contract_abi";
-import { getContractAddress } from "@/contracts";
+import { getContractAddress, StoryType } from "@/contracts";
 import {
   List,
   ListItem,
@@ -12,21 +12,21 @@ import {
   Skeleton,
   Stack,
 } from "@mui/material";
-import { pages } from "next/dist/build/templates/app-page";
 import { ReactNode, useState } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
-import { ReadContractReturnType } from "viem";
 import { useReadContract } from "wagmi";
 
-export default function StoryList() {
+export default function StoryList({ owner }: { owner?: `0x${string}` }) {
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
   const { data, error, isPending } = useReadContract({
     address: getContractAddress(),
     abi: contractAbi,
-    functionName: "getStories",
-    args: [BigInt((page - 1) * pageSize), BigInt(pageSize)],
+    functionName: owner ? "getBalance" : "getStories",
+    args: owner
+      ? [owner, BigInt((page - 1) * pageSize), BigInt(pageSize)]
+      : [BigInt((page - 1) * pageSize), BigInt(pageSize)],
   });
 
   if (error) {
@@ -40,7 +40,7 @@ export default function StoryList() {
       <StoryListItem key={i} />
     ));
   } else {
-    const [stories, total] = data;
+    const [stories, total] = data as [StoryType[], BigInt];
     items = stories.map((story) => (
       <StoryListItem key={story.index} story={story} />
     ));
@@ -60,11 +60,7 @@ export default function StoryList() {
   );
 }
 
-function StoryListItem({
-  story,
-}: {
-  story?: ReadContractReturnType<typeof contractAbi, "getStory", [0n]>;
-}) {
+function StoryListItem({ story }: { story?: StoryType }) {
   return (
     <ListItem disablePadding>
       {story ? (

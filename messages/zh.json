@@ -17,7 +17,9 @@
     "sellLong": "把你的故事上架到市场。你的言论为故事赋予价值。"
   },
   "Home": {
+    "stories": "故事",
     "market": "故事市场",
+    "my": "我的故事",
     "createStory": "创建新故事",
     "end": "end"
   },

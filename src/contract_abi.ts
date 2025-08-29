@@ -64,6 +64,41 @@ export const contractAbi = [
   },
   {
     type: "function",
+    name: "getBalance",
+    inputs: [
+      { name: "owner", type: "address", internalType: "address" },
+      { name: "offset", type: "uint256", internalType: "uint256" },
+      { name: "length", type: "uint256", internalType: "uint256" },
+    ],
+    outputs: [
+      {
+        name: "data",
+        type: "tuple[]",
+        internalType: "struct BuySaySell.Story[]",
+        components: [
+          { name: "index", type: "uint256", internalType: "uint256" },
+          { name: "owner", type: "address", internalType: "address" },
+          { name: "sellPrice", type: "uint256", internalType: "uint256" },
+          {
+            name: "comments",
+            type: "tuple[]",
+            internalType: "struct BuySaySell.Comment[]",
+            components: [
+              { name: "owner", type: "address", internalType: "address" },
+              { name: "content", type: "string", internalType: "string" },
+              { name: "price", type: "uint256", internalType: "uint256" },
+              { name: "timestamp", type: "uint256", internalType: "uint256" },
+              { name: "isLog", type: "bool", internalType: "bool" },
+            ],
+          },
+        ],
+      },
+      { name: "total", type: "uint256", internalType: "uint256" },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
     name: "getStories",
     inputs: [
       { name: "offset", type: "uint256", internalType: "uint256" },
