@@ -11,12 +11,16 @@ import {
   Pagination,
   Skeleton,
   Stack,
+  Typography,
 } from "@mui/material";
 import { ReactNode, useState } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
+import { useTranslations } from "use-intl";
+import { formatEther } from "viem";
 import { useReadContract } from "wagmi";
 
 export default function StoryList({ owner }: { owner?: `0x${string}` }) {
+  const t = useTranslations("Home");
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
@@ -33,7 +37,7 @@ export default function StoryList({ owner }: { owner?: `0x${string}` }) {
     return <div>Error: {error.shortMessage || error.message}</div>;
   }
 
-  let items: ReactNode[];
+  let items: ReactNode | ReactNode[];
   let count = 1;
   if (isPending) {
     items = Array.from(Array(pageSize).keys()).map((i) => (
@@ -41,11 +45,23 @@ export default function StoryList({ owner }: { owner?: `0x${string}` }) {
     ));
   } else {
     const [stories, total] = data as [StoryType[], BigInt];
-    items = stories.map((story) => (
-      <StoryListItem key={story.index} story={story} />
-    ));
-    console.log("total size " + total);
-    count = Math.ceil(Number(total) / pageSize);
+    if (total == 0n) {
+      items = (
+        <Stack alignItems="center" spacing={1} sx={{ mt: 4, mb: 4 }}>
+          <Typography variant="h6" color="secondary">
+            {t("empty")}
+          </Typography>
+          <Typography color="secondary">
+            {owner ? t("emptyMy") : t("emptyMarket")}
+          </Typography>
+        </Stack>
+      );
+    } else {
+      items = stories.map((story) => (
+        <StoryListItem key={story.index} story={story} />
+      ));
+      count = Math.ceil(Number(total) / pageSize);
+    }
   }
 
   return (
@@ -61,23 +77,40 @@ export default function StoryList({ owner }: { owner?: `0x${string}` }) {
 }
 
 function StoryListItem({ story }: { story?: StoryType }) {
+  const t = useTranslations("Home");
+
   return (
     <ListItem disablePadding>
-      {story ? (
-        <ListItemButton href={`/story/${story.index}`}>
-          <ListItemIcon>
+      <ListItemButton
+        disabled={!story}
+        href={story ? `/story/${story.index}` : "/"}
+      >
+        <ListItemIcon>
+          {story ? (
             <MetaMaskAvatar address={story.owner} />
-          </ListItemIcon>
-          <ListItemText primary={story.comments[0].content} />
-        </ListItemButton>
-      ) : (
-        <ListItemButton disabled>
-          <ListItemIcon>
+          ) : (
             <Skeleton variant="circular" width={24} height={24} />
-          </ListItemIcon>
-          <ListItemText primary={<Skeleton variant="text" />} />
-        </ListItemButton>
-      )}
+          )}
+        </ListItemIcon>
+        <Stack>
+          {story ? (
+            <ListItemText primary={story.comments[0].content} />
+          ) : (
+            <ListItemText primary={<Skeleton variant="text" />} />
+          )}
+          {story ? (
+            <Typography variant="caption" color="secondary">
+              {story.sellPrice > 0
+                ? `${formatEther(story.sellPrice)} ETH`
+                : t("notListed")}
+            </Typography>
+          ) : (
+            <Typography variant="caption">
+              <Skeleton variant="text" width={60} />
+            </Typography>
+          )}
+        </Stack>
+      </ListItemButton>
     </ListItem>
   );
 }

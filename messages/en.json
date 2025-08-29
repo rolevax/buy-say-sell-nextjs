@@ -21,7 +21,11 @@
     "market": "Story Market",
     "my": "My Stories",
     "createStory": "Create New Story",
-    "end": "end"
+    "empty": "No Stories",
+    "emptyMarket": "List your story to the market. ",
+    "emptyMy": "Buy from the market or create one. ",
+    "notListed": "Not Listed",
+    "$": "$"
   },
   "Story": {
     "story": "Story",
