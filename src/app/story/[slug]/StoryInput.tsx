@@ -1,7 +1,7 @@
 import CommentInput from "@/components/CommentInput";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi } from "@/contract_abi";
-import { getContractAddress, StoryType } from "@/contracts";
+import { getContractAddress, getFee, StoryType } from "@/contracts";
 import { Skeleton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -41,7 +41,7 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
         abi: contractAbi,
         functionName: "agreeSellPrice",
         args: [props.index],
-        value: props.sellPrice,
+        value: props.sellPrice + getFee(props.sellPrice),
       }}
     />
   );

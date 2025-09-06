@@ -53,9 +53,9 @@
     "keepUnlist": "保持下架",
     "post": "发布",
     "estimatedCost": "预计花费：{price} ETH",
-    "estimatedGas": "Gas 预估：{gas}",
-    "gasPrice": "Gas 单价：{price} gwei",
-    "value": "支出：{price} ETH",
+    "priceCost": "转账：{price} ETH",
+    "networkCost": "网络费用：{price} ETH",
+    "fee": "费用（0.05%）：{price} ETH",
     "confirmTx": "正在确认交易：{hash}",
     "end": "end"
   },

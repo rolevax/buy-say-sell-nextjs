@@ -53,9 +53,9 @@
     "keepUnlist": "Keep Unlisted",
     "post": "Post",
     "estimatedCost": "Estimated cost: {price} ETH",
-    "estimatedGas": "Estimated gas: {gas}",
-    "gasPrice": "Gas price: {price} gwei",
-    "value": "Value: {price} ETH",
+    "priceCost": "Transfer: {price} ETH",
+    "networkCost": "Network cost: {price} ETH",
+    "fee": "Fee (0.05%): {price} ETH",
     "confirmTx": "Confirming transaction: {hash}",
     "end": "end"
   },

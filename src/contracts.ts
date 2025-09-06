@@ -24,3 +24,7 @@ export function getContractAddressOf(chain: ReturnType<typeof getChainId>) {
   }
   return "0x";
 }
+
+export function getFee(price: bigint) {
+  return (price * 5n) / 10000n;
+}

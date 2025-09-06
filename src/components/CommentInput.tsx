@@ -26,6 +26,7 @@ import {
   useWriteContract,
 } from "wagmi";
 import EtherInput from "./EtherInput";
+import { getFee } from "@/contracts";
 
 export default function CommentInput(props: {
   submitButtonText?: string;
@@ -146,16 +147,20 @@ export default function CommentInput(props: {
           <Tooltip
             title={
               <div>
-                {t("estimatedGas", { gas: gas?.toString() ?? "" })}
-                <br />
-                {t("gasPrice", {
-                  price: gasPrice ? formatGwei(gasPrice) : "",
+                {t("priceCost", {
+                  price: props.writeValues.value
+                    ? formatEther(props.price)
+                    : "0",
                 })}
                 <br />
-                {t("value", {
+                {t("fee", {
                   price: props.writeValues.value
-                    ? formatEther(props.writeValues.value)
+                    ? formatEther(getFee(props.price))
                     : "0",
+                })}
+                <br />
+                {t("networkCost", {
+                  price: gas && gasPrice ? formatEther(gas * gasPrice) : "--",
                 })}
               </div>
             }
