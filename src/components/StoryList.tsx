@@ -3,6 +3,7 @@
 import { contractAbi } from "@/contract_abi";
 import { getContractAddress, StoryType } from "@/contracts";
 import {
+  Divider,
   List,
   ListItem,
   ListItemButton,
@@ -98,17 +99,32 @@ function StoryListItem({ story }: { story?: StoryType }) {
           ) : (
             <ListItemText primary={<Skeleton variant="text" />} />
           )}
-          {story ? (
-            <Typography variant="caption" color="secondary">
-              {story.sellPrice > 0
-                ? `${formatEther(story.sellPrice)} ETH`
-                : t("notListed")}
-            </Typography>
-          ) : (
-            <Typography variant="caption">
-              <Skeleton variant="text" width={60} />
-            </Typography>
-          )}
+          <Stack
+            direction="row"
+            spacing={1}
+            divider={<Divider orientation="vertical" flexItem />}
+          >
+            {story ? (
+              <Typography variant="caption" color="secondary">
+                {`#${story.index}`}
+              </Typography>
+            ) : (
+              <Typography variant="caption">
+                <Skeleton variant="text" width={40} />
+              </Typography>
+            )}
+            {story ? (
+              <Typography variant="caption" color="secondary">
+                {story.sellPrice > 0
+                  ? `${formatEther(story.sellPrice)} ETH`
+                  : t("notListed")}
+              </Typography>
+            ) : (
+              <Typography variant="caption">
+                <Skeleton variant="text" width={60} />
+              </Typography>
+            )}
+          </Stack>
         </Stack>
       </ListItemButton>
     </ListItem>
