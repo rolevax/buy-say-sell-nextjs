@@ -37,16 +37,8 @@ function DocsBody() {
   const t = useTranslations("Docs");
 
   const [index, setIndex] = useState(0);
-  const titles = [
-    t("about.title"),
-    t("contract.title"),
-    t("contributers.title"),
-  ];
-  const contents = [
-    <AboutContent />,
-    <ContractContent />,
-    <ContributerContent />,
-  ];
+  const titles = [t("about.title"), t("contract.title")];
+  const contents = [<AboutContent />, <ContractContent />];
 
   return (
     <Stack direction="row" sx={{ width: "100%" }}>
@@ -85,12 +77,6 @@ function AboutContent() {
         {t("about.tech.p1")}
         <MyBr />
         {t("about.tech.p2")}
-      </MyBody>
-      <MyH2>{t("about.pricing.title")}</MyH2>
-      <MyBody>
-        {t("about.pricing.p1")}
-        <MyBr />
-        {t("about.pricing.p2")}
       </MyBody>
     </Stack>
   );
@@ -141,26 +127,6 @@ function ContractContent() {
           </li>
         </ul>
       </MyBody>
-    </Stack>
-  );
-}
-
-function ContributerContent() {
-  const t = useTranslations("Docs");
-
-  return (
-    <Stack direction="column">
-      <MyH1>{t("contributers.title")}</MyH1>
-      <ul>
-        <li>
-          <Link href="https://github.com/rolevax">
-            <Stack direction="row" spacing={1}>
-              <GitHub />
-              <Typography>rolevax</Typography>
-            </Stack>
-          </Link>
-        </li>
-      </ul>
     </Stack>
   );
 }

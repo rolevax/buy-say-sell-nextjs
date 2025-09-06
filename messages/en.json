@@ -70,20 +70,14 @@
       },
       "motivation": {
         "title": "Motivation",
-        "p1": "Human creates too much trash infomation on the Internet. A place for only valueable information is desired. By valueable we mean the words worth money. People pays to say, and says to make people pay. ",
-        "p2": "The reason to pay for saying can be either cooperative or competitive. One can make an interesting story beginning to attract lovers to continue the story, or make a debative story beginning to attract haters to express a different opinion. In both cases, the buyer needs to thoughtfully arrange their words to keep the story interesting so the sotry can be sold. By this mechanism, those boring garbage information makers are kept away from this social media. ",
+        "p1": "Human creates too much trash infomation on the Internet. A place for only valueable information is desired. By valueable we mean the words worth money. People pay to say, and say to make people pay. ",
+        "p2": "The reason to pay for saying can be either cooperative or competitive. One can make an interesting story beginning to attract lovers to continue the story, or make a debative story beginning to attract haters to express a different opinion. In both cases, the buyer needs to thoughtfully arrange their words to keep the story interesting so the story can be sold. By this mechanism, those boring garbage information makers are kept away from this social media. ",
         "$": ""
       },
       "tech": {
         "title": "Technical Overview",
-        "p1": "Buy Say Sell is a decenteralized application based on Ethereum. The service is purely on-chain. The frontend webpage is also open-sourced and anyone can deploy it. Therefore, Buy Say Sell will never end its service, and your stories are truly yours. ",
-        "p2": "The stories are standard ERC-721 NFT's, so they can also be traded outside this platform, like Web 3 wallets and NFT markets. ",
-        "$": "$"
-      },
-      "pricing": {
-        "title": "Pricing",
-        "p1": "Currently Buy Say Sell is gas-only. Gas are paid to network validators (miners), and the developers are totally volunteering. ",
-        "p2": "This application is developed mostly for experimental purpose. ",
+        "p1": "Buy Say Sell is a decenteralized application based on Ethereum. ",
+        "p2": "All the stores are stored and managed within the smart contract. Your stories are truely yours, and will not be lost due to a shutdown or evilness of this project. ",
         "$": "$"
       },
       "$": ""
@@ -96,11 +90,7 @@
       "webpage": "Web Page",
       "$": "$"
     },
-    "contributers": {
-      "title": "Contributers",
-      "end": "end"
-    },
-    "end": "end"
+    "$": "$"
   },
-  "End": {}
+  "$": {}
 }
