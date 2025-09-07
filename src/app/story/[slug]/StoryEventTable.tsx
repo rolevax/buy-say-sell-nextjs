@@ -136,7 +136,7 @@ function EventRowContent({ comment }: { comment?: CommentType }) {
   return (
     <Stack>
       {comment.content.split(/\n/).map((line) => (
-        <Typography variant="body1" color="textPrimary">
+        <Typography key={line} variant="body1" color="textPrimary">
           {line}
         </Typography>
       ))}
