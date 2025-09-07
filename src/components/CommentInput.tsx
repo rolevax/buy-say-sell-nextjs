@@ -176,7 +176,7 @@ export default function CommentInput(props: {
       )}
       {error && (
         <Alert severity="error" variant="outlined">
-          {error.message || error.message}
+          {error.message}
         </Alert>
       )}
     </Box>
