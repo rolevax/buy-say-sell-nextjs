@@ -10,6 +10,8 @@ export type StoryType = ReadContractReturnType<
 >;
 export type CommentType = StoryType["comments"][0];
 
+export const defaultPrice = 100000000000000n;
+
 export function getContractAddress() {
   const chain = getChainId(config);
   return getContractAddressOf(chain);

@@ -1,13 +1,13 @@
 "use client";
 
 import { contractAbi } from "@/contract_abi";
-import { getContractAddress } from "@/contracts";
+import { defaultPrice, getContractAddress } from "@/contracts";
 import { useState } from "react";
 import CommentInput from "./CommentInput";
 
 export default function CreateStoryBox() {
   const [content, setContent] = useState("");
-  const [price, setPrice] = useState(1000000000n);
+  const [price, setPrice] = useState(defaultPrice);
   const [isListing, setListing] = useState(true);
 
   return (

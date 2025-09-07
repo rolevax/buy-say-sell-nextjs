@@ -1,7 +1,12 @@
 import CommentInput from "@/components/CommentInput";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi } from "@/contract_abi";
-import { getContractAddress, getFee, StoryType } from "@/contracts";
+import {
+  defaultPrice,
+  getContractAddress,
+  getFee,
+  StoryType,
+} from "@/contracts";
 import { Skeleton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -51,7 +56,7 @@ function SayInput(props: { index: bigint; initPrice: bigint }) {
   const t = useTranslations("Story");
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(
-    props.initPrice == 0n ? 1000000000n : props.initPrice
+    props.initPrice == 0n ? defaultPrice : props.initPrice
   );
   const wasListing = props.initPrice > 0;
   const [isListing, setListing] = useState(wasListing);
