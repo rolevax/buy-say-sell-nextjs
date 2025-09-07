@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <Container maxWidth="lg">
       <Box sx={{ width: "100%", flexGrow: 1 }}>
-        <CommonAppBar title={<Badge badgeContent="Beta">{t("name")}</Badge>} />
+        <CommonAppBar title={<Badge badgeContent="V1">{t("name")}</Badge>} />
         <HomeBody />
       </Box>
     </Container>

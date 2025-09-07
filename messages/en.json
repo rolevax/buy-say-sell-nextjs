@@ -8,13 +8,14 @@
     "darkMode": "Toggle dark mode"
   },
   "BriefIntro": {
-    "begin": "Buy Say Sell is an altered social media where you can:",
     "buyTitle": "Buy a story",
     "sayTitle": "Say something",
     "sellTitle": "And sell it!",
-    "buyLong": "Each story has one unique owner. Buy to own the story. You can also create new stories.",
-    "sayLong": "As the owner, you are the only one who can comment to the story. Say something.",
-    "sellLong": "List your story to the market. Your words value the story."
+    "buyLong": "Stories are owned. To own a story, buy it, or create one. ",
+    "sayLong": "As the owner, now you can add content to the story. Say something.",
+    "sellLong": "List your story to the market. Your words value the story.",
+    "learnMore": "Learn more",
+    "$": "$"
   },
   "Home": {
     "stories": "Stories",

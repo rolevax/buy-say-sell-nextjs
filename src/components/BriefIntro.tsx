@@ -2,25 +2,24 @@
 
 import {
   AddComment,
+  ArrowForward,
   Discount,
-  ExpandLess,
-  ExpandMore,
   ShoppingCart,
 } from "@mui/icons-material";
 import {
-  Collapse,
-  List,
-  ListItemButton,
-  ListItemIcon,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  ListItem,
   ListItemText,
-  ListSubheader,
+  Stack,
+  Typography,
 } from "@mui/material";
-import { useState } from "react";
 import { useTranslations } from "use-intl";
 
 export default function BriefIntro() {
   const t = useTranslations("BriefIntro");
-  const [open, setOpen] = useState([false, false, false]);
 
   const items = [];
   const titles = [t("buyTitle"), t("sayTitle"), t("sellTitle")];
@@ -29,44 +28,45 @@ export default function BriefIntro() {
 
   for (let i = 0; i < titles.length; i++) {
     items.push(
-      <ListItemButton
-        key={i * 2}
-        onClick={() => setOpen(open.map((o, j) => (i == j ? !o : o)))}
-      >
-        <ListItemIcon>{icons[i]}</ListItemIcon>
-        <ListItemText primary={titles[i]} />
-        {open[i] ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-    );
-    items.push(
-      <Collapse key={i * 2 + 1} in={open[i]} timeout="auto" unmountOnExit>
-        <ListItemText sx={{ pl: 4, pr: 4 }} secondary={contents[i]} />
-      </Collapse>
+      <Card key={i} sx={{ width: 180 }}>
+        <CardContent>
+          <ListItem sx={{ p: 0, mb: 1 }}>
+            {icons[i]}
+            <ListItemText sx={{ ml: 2 }} primary={titles[i]} />
+          </ListItem>
+          <Typography variant="body2">{contents[i]}</Typography>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 16,
-      }}
+    <Stack
+      direction="column"
+      spacing={2}
+      justifyContent="center"
+      alignItems="center"
+      padding={4}
     >
-      <List
-        sx={{ width: "50%" }}
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            {t("begin")}
-          </ListSubheader>
+      <Stack
+        direction="row"
+        spacing={1}
+        alignItems="stretch"
+        divider={
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ArrowForward />
+          </Box>
         }
       >
         {items}
-      </List>
-    </div>
+      </Stack>
+      <Button href="/docs">{t("learnMore")}</Button>
+    </Stack>
   );
 }
