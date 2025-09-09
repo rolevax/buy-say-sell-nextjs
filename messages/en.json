@@ -41,11 +41,11 @@
     "notListed": "Not listed",
     "interactions": "Interactions",
     "buy": "Buy",
-    "buyToComment": "Buy to comment",
+    "buyToComment": "Buy to add content",
     "end": "end"
   },
   "CommentInput": {
-    "comment": "Comment",
+    "addComment": "Add story content",
     "price": "Price",
     "priceTitle": "Marketing and Price",
     "list": "List",

@@ -79,10 +79,10 @@ export default function CommentInput(props: {
     <Box>
       <form onSubmit={submit}>
         <TextField
-          label={t("comment")}
+          label={t("addComment")}
           multiline
           fullWidth
-          rows={2}
+          rows={3}
           value={props.content}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>

@@ -41,11 +41,11 @@
     "notListed": "未上架",
     "interactions": "交互",
     "buy": "买",
-    "buyToComment": "买下以评论",
+    "buyToComment": "买下以添加故事内容",
     "end": "end"
   },
   "CommentInput": {
-    "comment": "评论",
+    "addComment": "添加故事内容",
     "price": "价格",
     "priceTitle": "市场策略与价格",
     "list": "上架",
