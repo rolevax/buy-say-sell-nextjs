@@ -139,7 +139,7 @@ export default function CommentInput(props: {
             {t("estimatedCost", {
               price: formatEther(
                 gas && gasPrice
-                  ? (props.writeValues.value ?? 0n) + gas * gasPrice
+                  ? (props.writeValues.value ?? 0n) + BigInt(gas) * gasPrice
                   : 0n
               ),
             })}
@@ -160,7 +160,10 @@ export default function CommentInput(props: {
                 })}
                 <br />
                 {t("networkCost", {
-                  price: gas && gasPrice ? formatEther(gas * gasPrice) : "--",
+                  price:
+                    gas && gasPrice
+                      ? formatEther(BigInt(gas) * gasPrice)
+                      : "--",
                 })}
               </div>
             }
