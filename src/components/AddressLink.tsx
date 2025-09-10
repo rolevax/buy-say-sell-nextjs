@@ -9,11 +9,11 @@ export default function AddressLink(props: {
 }) {
   const explorer =
     config.chains.find((c) => c.id == getChainId(config))?.blockExplorers
-      ?.default.url ?? "https://etherscan.io/address";
+      ?.default.url ?? "https://etherscan.io";
 
   return (
     <Link
-      href={`${explorer}/${props.address}`}
+      href={`${explorer}/address/${props.address}`}
       target="_blank"
       rel="noopener"
       underline="hover"
