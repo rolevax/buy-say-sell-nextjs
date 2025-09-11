@@ -85,8 +85,8 @@
     },
     "contract": {
       "title": "Contract and Source",
-      "sourceText": "Buy Say Sell consists of two parts: the contract and the web page. Their source can be checked at: ",
-      "contractText": "The contract addresses for each networks are: ",
+      "sourceText": "Source code:",
+      "contractText": "Contract addresses: ",
       "contract": "Contract",
       "webpage": "Web Page",
       "$": "$"
