@@ -20,20 +20,13 @@ export const contractAbi = [
   },
   {
     type: "function",
-    name: "agreeSellPrice",
-    inputs: [{ name: "storyIndex", type: "uint256", internalType: "uint256" }],
-    outputs: [],
-    stateMutability: "payable",
-  },
-  {
-    type: "function",
     name: "approve",
     inputs: [
-      { name: "to", type: "address", internalType: "address" },
-      { name: "tokenId", type: "uint256", internalType: "uint256" },
+      { name: "", type: "address", internalType: "address" },
+      { name: "", type: "uint256", internalType: "uint256" },
     ],
     outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "pure",
   },
   {
     type: "function",
@@ -44,7 +37,14 @@ export const contractAbi = [
   },
   {
     type: "function",
-    name: "changeSellPrice",
+    name: "buy",
+    inputs: [{ name: "storyIndex", type: "uint256", internalType: "uint256" }],
+    outputs: [],
+    stateMutability: "payable",
+  },
+  {
+    type: "function",
+    name: "changePrice",
     inputs: [
       { name: "storyIndex", type: "uint256", internalType: "uint256" },
       { name: "price", type: "uint256", internalType: "uint256" },
@@ -54,7 +54,7 @@ export const contractAbi = [
   },
   {
     type: "function",
-    name: "createStory",
+    name: "create",
     inputs: [
       { name: "content", type: "string", internalType: "string" },
       { name: "price", type: "uint256", internalType: "uint256" },
@@ -72,9 +72,9 @@ export const contractAbi = [
   {
     type: "function",
     name: "getApproved",
-    inputs: [{ name: "tokenId", type: "uint256", internalType: "uint256" }],
+    inputs: [{ name: "", type: "uint256", internalType: "uint256" }],
     outputs: [{ name: "operator", type: "address", internalType: "address" }],
-    stateMutability: "view",
+    stateMutability: "pure",
   },
   {
     type: "function",
@@ -179,11 +179,11 @@ export const contractAbi = [
     type: "function",
     name: "isApprovedForAll",
     inputs: [
-      { name: "owner", type: "address", internalType: "address" },
-      { name: "operator", type: "address", internalType: "address" },
+      { name: "", type: "address", internalType: "address" },
+      { name: "", type: "address", internalType: "address" },
     ],
     outputs: [{ name: "", type: "bool", internalType: "bool" }],
-    stateMutability: "view",
+    stateMutability: "pure",
   },
   {
     type: "function",
@@ -229,29 +229,29 @@ export const contractAbi = [
       { name: "tokenId", type: "uint256", internalType: "uint256" },
     ],
     outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "pure",
   },
   {
     type: "function",
     name: "safeTransferFrom",
     inputs: [
-      { name: "from", type: "address", internalType: "address" },
-      { name: "to", type: "address", internalType: "address" },
-      { name: "tokenId", type: "uint256", internalType: "uint256" },
-      { name: "data", type: "bytes", internalType: "bytes" },
+      { name: "", type: "address", internalType: "address" },
+      { name: "", type: "address", internalType: "address" },
+      { name: "", type: "uint256", internalType: "uint256" },
+      { name: "", type: "bytes", internalType: "bytes" },
     ],
     outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "pure",
   },
   {
     type: "function",
     name: "setApprovalForAll",
     inputs: [
-      { name: "operator", type: "address", internalType: "address" },
-      { name: "approved", type: "bool", internalType: "bool" },
+      { name: "", type: "address", internalType: "address" },
+      { name: "", type: "bool", internalType: "bool" },
     ],
     outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "pure",
   },
   {
     type: "function",
@@ -278,12 +278,12 @@ export const contractAbi = [
     type: "function",
     name: "transferFrom",
     inputs: [
-      { name: "from", type: "address", internalType: "address" },
-      { name: "to", type: "address", internalType: "address" },
-      { name: "tokenId", type: "uint256", internalType: "uint256" },
+      { name: "", type: "address", internalType: "address" },
+      { name: "", type: "address", internalType: "address" },
+      { name: "", type: "uint256", internalType: "uint256" },
     ],
     outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "pure",
   },
   {
     type: "function",
@@ -437,6 +437,7 @@ export const contractAbi = [
     name: "ERC721NonexistentToken",
     inputs: [{ name: "tokenId", type: "uint256", internalType: "uint256" }],
   },
+  { type: "error", name: "NotSupportedError", inputs: [] },
   {
     type: "error",
     name: "OwnableInvalidOwner",

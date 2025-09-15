@@ -44,7 +44,7 @@ function BuyInput(props: { index: bigint; sellPrice: bigint }) {
       writeValues={{
         address: getContractAddress(),
         abi: contractAbi,
-        functionName: "agreeSellPrice",
+        functionName: "buy",
         args: [props.index],
         value: props.sellPrice + getFee(props.sellPrice),
       }}
@@ -80,7 +80,7 @@ function SayInput(props: { index: bigint; initPrice: bigint }) {
           ? {
               address: getContractAddress(),
               abi: contractAbi,
-              functionName: "changeSellPrice",
+              functionName: "changePrice",
               args: [props.index, isListing ? price : 0n],
             }
           : {

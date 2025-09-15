@@ -23,7 +23,7 @@ export default function CreateStoryBox() {
       writeValues={{
         address: getContractAddress(),
         abi: contractAbi,
-        functionName: "createStory",
+        functionName: "create",
         args: [content, isListing ? price : 0n],
       }}
     />
