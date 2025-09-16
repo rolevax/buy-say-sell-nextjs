@@ -19,7 +19,7 @@ export function getContractAddress() {
 
 export function getContractAddressOf(chain: ReturnType<typeof getChainId>) {
   if (chain == sepolia.id) {
-    return "0xba6Ca6f8492aBd2b7e1EF1038A9bf46C71E8c4B6";
+    return "0x0671195247F6F708fA5345b9f5bEaDbE9dB1B8b5";
   }
   if (chain == anvil.id) {
     return "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
