@@ -77,8 +77,8 @@
       },
       "tech": {
         "title": "Technical Overview",
-        "p1": "Buy Say Sell is a decentralized application based on Ethereum. ",
-        "p2": "All the stores are stored and managed within the smart contract. Your stories are truly yours, and will not be lost due to a shutdown or evilness of this project. ",
+        "p1": "Buy Say Sell is an EVM based decentralized application. ",
+        "p2": "All the stores are stored and managed within the smart contract. Your stories will not be lost due to a shutdown or evilness of this project. ",
         "$": "$"
       },
       "$": ""
