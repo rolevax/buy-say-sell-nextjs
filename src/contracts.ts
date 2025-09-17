@@ -1,5 +1,5 @@
 import { getChainId, ReadContractReturnType } from "@wagmi/core";
-import { anvil, sepolia } from "viem/chains";
+import { anvil, arbitrum, sepolia } from "viem/chains";
 import { useChainId } from "wagmi";
 import { contractAbi } from "./contract_abi";
 
@@ -20,6 +20,9 @@ export function useContractAddress(): `0x${string}` | undefined {
 export function getContractAddressOf(
   chain: ReturnType<typeof getChainId>
 ): `0x${string}` | undefined {
+  if (chain == arbitrum.id) {
+    return "0x55D457AcE502Ca256C3f475906e434caAc13C222";
+  }
   if (chain == sepolia.id) {
     return "0x0671195247F6F708fA5345b9f5bEaDbE9dB1B8b5";
   }

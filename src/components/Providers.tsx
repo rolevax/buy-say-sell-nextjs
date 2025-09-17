@@ -16,7 +16,7 @@ import { WagmiProvider } from "wagmi";
 import { LocaleCode } from "@/i18n/config";
 import { useMediaQuery } from "@mui/material";
 import { useLocale } from "next-intl";
-import { sepolia } from "wagmi/chains";
+import { arbitrum } from "wagmi/chains";
 import { config } from "../wagmi";
 
 const queryClient = new QueryClient();
@@ -45,7 +45,7 @@ export function Providers2({ children }: { children: React.ReactNode }) {
 
   return (
     <RainbowKitProvider
-      initialChain={sepolia}
+      initialChain={arbitrum}
       theme={isDark ? darkTheme() : lightTheme()}
       locale={locale}
     >
