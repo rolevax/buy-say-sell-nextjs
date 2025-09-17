@@ -26,6 +26,8 @@
     "emptyMarket": "将你的故事上架市场。",
     "emptyMy": "从市场购买，或创建新故事。",
     "notListed": "未上架",
+    "unsupportedNetworkTitle": "暂不支持 {chain} 网络",
+    "unsupportedNetworkContent": "请切换至其它网络。",
     "$": "$"
   },
   "Story": {

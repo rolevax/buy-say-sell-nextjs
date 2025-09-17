@@ -1,18 +1,19 @@
 import CommentInput from "@/components/CommentInput";
 import PleaseConnect from "@/components/PleaseConnect";
 import { contractAbi } from "@/contract_abi";
-import {
-  defaultPrice,
-  getContractAddress,
-  getFee,
-  StoryType,
-} from "@/contracts";
+import { defaultPrice, getFee, StoryType } from "@/contracts";
 import { Skeleton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 
-export default function StoryInput({ story }: { story?: StoryType }) {
+export default function StoryInput({
+  story,
+  contractAddress,
+}: {
+  story?: StoryType;
+  contractAddress: `0x${string}`;
+}) {
   const { address, isConnected } = useAccount();
   if (!isConnected) {
     return <PleaseConnect />;
@@ -23,42 +24,70 @@ export default function StoryInput({ story }: { story?: StoryType }) {
   }
 
   if (story.owner == address) {
-    return <SayInput index={story.index} initPrice={story.sellPrice} />;
+    return (
+      <SayInput
+        index={story.index}
+        initPrice={story.sellPrice}
+        contractAddress={contractAddress}
+      />
+    );
   }
 
-  return <BuyInput index={story.index} sellPrice={story.sellPrice} />;
+  return (
+    <BuyInput
+      index={story.index}
+      sellPrice={story.sellPrice}
+      contractAddress={contractAddress}
+    />
+  );
 }
 
-function BuyInput(props: { index: bigint; sellPrice: bigint }) {
+function BuyInput({
+  index,
+  sellPrice,
+  contractAddress,
+}: {
+  index: bigint;
+  sellPrice: bigint;
+  contractAddress: `0x${string}`;
+}) {
   const t = useTranslations("Story");
-  const isSelling = props.sellPrice > 0;
+  const isSelling = sellPrice > 0;
 
   return (
     <CommentInput
       submitButtonText={t("buy")}
-      price={props.sellPrice}
-      isListing={props.sellPrice > 0}
-      wasListing={props.sellPrice > 0 ? "list" : "unlist"}
+      price={sellPrice}
+      isListing={sellPrice > 0}
+      wasListing={sellPrice > 0 ? "list" : "unlist"}
       content={t("buyToComment")}
       canSubmit={isSelling}
       writeValues={{
-        address: getContractAddress(),
+        address: contractAddress,
         abi: contractAbi,
         functionName: "buy",
-        args: [props.index],
-        value: props.sellPrice + getFee(props.sellPrice),
+        args: [index],
+        value: sellPrice + getFee(sellPrice),
       }}
     />
   );
 }
 
-function SayInput(props: { index: bigint; initPrice: bigint }) {
+function SayInput({
+  index,
+  initPrice,
+  contractAddress,
+}: {
+  index: bigint;
+  initPrice: bigint;
+  contractAddress: `0x${string}`;
+}) {
   const t = useTranslations("Story");
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(
-    props.initPrice == 0n ? defaultPrice : props.initPrice
+    initPrice == 0n ? defaultPrice : initPrice
   );
-  const wasListing = props.initPrice > 0;
+  const wasListing = initPrice > 0;
   const [isListing, setListing] = useState(wasListing);
 
   return (
@@ -72,22 +101,22 @@ function SayInput(props: { index: bigint; initPrice: bigint }) {
       onContentChanged={setContent}
       canSubmit={
         (!isListing && wasListing) ||
-        (isListing && price != props.initPrice && price > 0n) ||
+        (isListing && price != initPrice && price > 0n) ||
         !!content
       }
       writeValues={
         content.trim() == ""
           ? {
-              address: getContractAddress(),
+              address: contractAddress,
               abi: contractAbi,
               functionName: "changePrice",
-              args: [props.index, isListing ? price : 0n],
+              args: [index, isListing ? price : 0n],
             }
           : {
-              address: getContractAddress(),
+              address: contractAddress,
               abi: contractAbi,
               functionName: "addComment",
-              args: [props.index, content, isListing ? price : 0n],
+              args: [index, content, isListing ? price : 0n],
             }
       }
     />

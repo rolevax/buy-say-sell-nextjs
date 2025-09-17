@@ -1,57 +1,56 @@
 "use client";
 
-import AddressLink from "@/components/AddressLink";
 import CommonAppBar from "@/components/CommonAppBar";
 import Copyright from "@/components/Copyright";
-import { getContractAddress } from "@/contracts";
-import {
-  Box,
-  Container,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import EmptyNetworkHint from "@/components/EmptyNetworkHint";
+import { contractAbi } from "@/contract_abi";
+import { useContractAddress } from "@/contracts";
+import { Box, Container, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { MetaMaskAvatar } from "react-metamask-avatar";
-import { formatEther } from "viem";
 import { useReadContract } from "wagmi";
 import StoryEventTable from "./StoryEventTable";
 import StoryInput from "./StoryInput";
 import StoryStatus from "./StoryStatus";
-import { contractAbi } from "@/contract_abi";
 
 export default function Story() {
   const t = useTranslations("Story");
   const pathname = usePathname();
+  const contractAddress = useContractAddress();
   let storyID = pathname.substring(pathname.lastIndexOf("/") + 1);
 
   return (
     <Container maxWidth="lg">
       <Box sx={{ width: "100%", flexGrow: 1 }}>
         <CommonAppBar title={`${t("story")} #${storyID}`} />
-        <StoryBody storyID={storyID} />
+        {contractAddress ? (
+          <StoryBody storyID={storyID} contractAddress={contractAddress} />
+        ) : (
+          <EmptyNetworkHint />
+        )}
       </Box>
     </Container>
   );
 }
 
-function StoryBody(props: { storyID: string }) {
+function StoryBody({
+  storyID,
+  contractAddress,
+}: {
+  storyID: string;
+  contractAddress: `0x${string}`;
+}) {
   const t = useTranslations("Story");
+
   const {
     data: story,
     error,
     isPending,
   } = useReadContract({
-    address: getContractAddress(),
+    address: contractAddress,
     abi: contractAbi,
     functionName: "getStory",
-    args: [BigInt(+props.storyID)],
+    args: [BigInt(+storyID)],
   });
 
   if (error) {
@@ -71,7 +70,7 @@ function StoryBody(props: { storyID: string }) {
       <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
         {t("interactions")}
       </Typography>
-      <StoryInput story={story} />
+      <StoryInput story={story} contractAddress={contractAddress} />
       <Copyright />
     </Box>
   );

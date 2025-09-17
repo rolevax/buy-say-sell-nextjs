@@ -26,6 +26,8 @@
     "emptyMarket": "List your story to the market. ",
     "emptyMy": "Buy from the market or create one. ",
     "notListed": "Not Listed",
+    "unsupportedNetworkTitle": "Network \"{chain}\" not supported",
+    "unsupportedNetworkContent": "Please switch to another network. ",
     "$": "$"
   },
   "Story": {

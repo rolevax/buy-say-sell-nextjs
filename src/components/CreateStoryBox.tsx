@@ -1,11 +1,15 @@
 "use client";
 
 import { contractAbi } from "@/contract_abi";
-import { defaultPrice, getContractAddress } from "@/contracts";
+import { defaultPrice } from "@/contracts";
 import { useState } from "react";
 import CommentInput from "./CommentInput";
 
-export default function CreateStoryBox() {
+export default function CreateStoryBox({
+  contractAddress,
+}: {
+  contractAddress: `0x${string}`;
+}) {
   const [content, setContent] = useState("");
   const [price, setPrice] = useState(defaultPrice);
   const [isListing, setListing] = useState(true);
@@ -21,7 +25,7 @@ export default function CreateStoryBox() {
       onContentChanged={setContent}
       canSubmit={!!content.trim() && (!isListing || price > 0n)}
       writeValues={{
-        address: getContractAddress(),
+        address: contractAddress,
         abi: contractAbi,
         functionName: "create",
         args: [content, isListing ? price : 0n],

@@ -1,7 +1,7 @@
 "use client";
 
 import { contractAbi } from "@/contract_abi";
-import { getContractAddress, StoryType } from "@/contracts";
+import { StoryType } from "@/contracts";
 import {
   Divider,
   List,
@@ -19,14 +19,21 @@ import { MetaMaskAvatar } from "react-metamask-avatar";
 import { useTranslations } from "use-intl";
 import { formatEther } from "viem";
 import { useReadContract } from "wagmi";
+import EmptyHint from "./EmptyHint";
 
-export default function StoryList({ owner }: { owner?: `0x${string}` }) {
+export default function StoryList({
+  owner,
+  contractAddress,
+}: {
+  owner?: `0x${string}`;
+  contractAddress: `0x${string}`;
+}) {
   const t = useTranslations("Home");
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
   const { data, error, isPending } = useReadContract({
-    address: getContractAddress(),
+    address: contractAddress,
     abi: contractAbi,
     functionName: owner ? "getBalance" : "getStories",
     args: owner
@@ -48,14 +55,10 @@ export default function StoryList({ owner }: { owner?: `0x${string}` }) {
     const [stories, total] = data as [StoryType[], BigInt];
     if (total == 0n) {
       items = (
-        <Stack alignItems="center" spacing={1} sx={{ mt: 4, mb: 4 }}>
-          <Typography variant="h6" color="secondary">
-            {t("empty")}
-          </Typography>
-          <Typography color="secondary">
-            {owner ? t("emptyMy") : t("emptyMarket")}
-          </Typography>
-        </Stack>
+        <EmptyHint
+          title={t("empty")}
+          content={owner ? t("emptyMy") : t("emptyMarket")}
+        />
       );
     } else {
       items = stories.map((story) => (

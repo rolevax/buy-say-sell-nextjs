@@ -17,7 +17,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { useTranslations } from "next-intl";
 import { ReactNode, useState } from "react";
-import { sepolia } from "wagmi/chains";
+import { arbitrum, sepolia } from "wagmi/chains";
 
 export default function About() {
   const t = useTranslations("Docs");
@@ -85,6 +85,7 @@ function AboutContent() {
 function ContractContent() {
   const t = useTranslations("Docs");
   const sepoliaAddress = getContractAddressOf(sepolia.id);
+  const arbiturmAddress = getContractAddressOf(arbitrum.id);
 
   return (
     <Stack direction="column">
@@ -116,9 +117,19 @@ function ContractContent() {
         {t("contract.contractText")}
         <ul>
           <li>
-            Sepolia:{" "}
+            {`${arbitrum.name}: `}
             <Link
-              href={`https://sepolia.etherscan.io/address/${sepoliaAddress}`}
+              href={`${arbitrum.blockExplorers.default.url}/address/${arbiturmAddress}`}
+              target="_blank"
+              rel="noopener"
+            >
+              {arbiturmAddress}
+            </Link>
+          </li>
+          <li>
+            {`${sepolia.name}: `}
+            <Link
+              href={`${sepolia.blockExplorers.default.url}/address/${sepoliaAddress}`}
               target="_blank"
               rel="noopener"
             >
