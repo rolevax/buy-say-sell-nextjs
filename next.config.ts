@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       underscore: "lodash",
     },
   },
+  serverExternalPackages: ['thread-stream', 'pino'],
 };
 
 const withNextIntl = createNextIntlPlugin();
